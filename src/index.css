@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-surface-base text-white/90 font-body;
+    margin: 0;
+    min-height: 100vh;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-white/[0.03] backdrop-blur-md border border-edge;
+  }
+
+  .glass-card {
+    @apply bg-white/[0.03] backdrop-blur-md border border-edge rounded-xl2;
+  }
+
+  .glass-hover {
+    @apply transition-all duration-200 hover:bg-white/[0.05] hover:border-edge-strong;
+  }
+
+  .input-base {
+    @apply bg-white/[0.04] border border-edge rounded-lg px-3 py-2 text-sm text-white
+           placeholder:text-white/30 outline-none transition-all duration-150
+           focus:border-rayon-orange/50 focus:ring-1 focus:ring-rayon-orange/30;
+  }
+
+  .btn-primary {
+    @apply bg-rayon-orange hover:bg-rayon-orange-600 text-white font-semibold
+           rounded-lg px-4 py-2 text-sm transition-all duration-150
+           shadow-lg shadow-rayon-orange/20 hover:shadow-rayon-orange/30
+           active:scale-[0.98] inline-flex items-center justify-center gap-2;
+  }
+
+  .btn-ghost {
+    @apply bg-white/[0.04] hover:bg-white/[0.08] border border-edge hover:border-edge-strong
+           text-white/80 hover:text-white font-medium rounded-lg px-4 py-2 text-sm
+           transition-all duration-150 active:scale-[0.98]
+           inline-flex items-center justify-center gap-2;
+  }
+
+  .btn-danger {
+    @apply bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 hover:border-red-500/40
+           text-red-400 hover:text-red-300 font-medium rounded-lg px-4 py-2 text-sm
+           transition-all duration-150 active:scale-[0.98]
+           inline-flex items-center justify-center gap-2;
+  }
+
+  .badge-base {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+}
+
+@layer utilities {
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.1) transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: rgba(255,255,255,0.1);
+    border-radius: 3px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255,255,255,0.2);
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+}
