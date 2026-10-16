@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
+import { useToast } from '@/components/ui/Toast';
 import { supabase } from '@/lib/supabase';
 import { logActivity } from '@/lib/helpers';
 import { PageHeader, Card, FormField } from '@/components/ui/PageHeader';
@@ -7,9 +8,9 @@ import { Modal } from '@/components/ui/Modal';
 import { LoadingState, ErrorState, StatusBadge, EmptyState } from '@/components/ui/Feedback';
 import { Tabs } from '@/components/ui/Tabs';
 import {
-  BookOpen, Plus, Search, Pencil, Trash2, Save, X, Clock, Calendar, Target,
+  BookOpen, Plus, Search, Pencil, Trash2, Save, X, Clock, Calendar,
 } from 'lucide-react';
-import type { Lesson, Class, Teacher } from '@/lib/types';
+import type { Lesson } from '@/lib/types';
 
 const LESSON_STATUS_OPTIONS = [
   { value: 'agendada', label: 'Agendada' },
@@ -23,6 +24,7 @@ type LessonWithRelations = Lesson & {
 };
 
 export function LessonsPage() {
+  const { toast } = useToast();
   const [lessons, setLessons] = useState<LessonWithRelations[]>([]);
   const [classes, setClasses] = useState<{ id: string; name: string }[]>([]);
   const [teachers, setTeachers] = useState<{ id: string; first_name: string; last_name: string }[]>([]);
@@ -79,7 +81,7 @@ export function LessonsPage() {
   const handleSave = async (formData: Partial<Lesson>) => {
     try {
       if (editingLesson) {
-        const { id, created_at, updated_at, ...updateData } = editingLesson;
+        const { id } = editingLesson;
         const { error } = await supabase
           .from('lessons')
           .update({ ...formData, updated_at: new Date().toISOString() })
@@ -99,7 +101,7 @@ export function LessonsPage() {
       setEditingLesson(null);
       load();
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'Erro ao salvar aula');
+      toast(err instanceof Error ? err.message : 'Erro ao salvar aula', 'error');
     }
   };
 
@@ -111,7 +113,7 @@ export function LessonsPage() {
       await logActivity('lesson', 'Aula excluída', lesson.title, 'lesson', lesson.id);
       load();
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'Erro ao excluir aula');
+      toast(err instanceof Error ? err.message : 'Erro ao excluir aula', 'error');
     }
   };
 
@@ -332,6 +334,7 @@ function LessonFormModal({
   teachers: { id: string; first_name: string; last_name: string }[];
   onSave: (data: Partial<Lesson>) => void;
 }) {
+  const { toast } = useToast();
   const [formData, setFormData] = useState<Partial<Lesson>>({});
   const [saving, setSaving] = useState(false);
 
@@ -370,11 +373,11 @@ function LessonFormModal({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.title || !formData.class_id || !formData.teacher_id) {
-      alert('Título, turma e professor são obrigatórios');
+      toast('Título, turma e professor são obrigatórios', 'warning');
       return;
     }
     if (formData.start_time && formData.end_time && formData.start_time >= formData.end_time) {
-      alert('O horário de início deve ser anterior ao horário de fim');
+      toast('O horário de início deve ser anterior ao horário de fim', 'warning');
       return;
     }
     setSaving(true);

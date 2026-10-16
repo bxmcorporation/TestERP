@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
+import { useToast } from '@/components/ui/Toast';
 import { supabase } from '@/lib/supabase';
 import { logActivity, generateCode } from '@/lib/helpers';
 import { PageHeader, Card, FormField } from '@/components/ui/PageHeader';
@@ -8,7 +9,7 @@ import { LoadingState, ErrorState, StatusBadge, EmptyState } from '@/components/
 import { Tabs } from '@/components/ui/Tabs';
 import {
   Users, UserPlus, Search, Eye, Pencil, Trash2, Phone, Mail,
-  Calendar, BookOpen, ClipboardList, School, TrendingUp, Wallet,
+  Calendar, ClipboardList, School, TrendingUp, Wallet,
   FileText, ArrowLeft, Save, X,
 } from 'lucide-react';
 import type { Student, Course, Guardian, StudentGuardian, Enrollment, Class, FinancialItem, Attendance, Lesson } from '@/lib/types';
@@ -19,7 +20,7 @@ type StudentWithRelations = Student & {
   student_guardians?: (StudentGuardian & { guardian: Guardian })[];
 };
 
-export function StudentsPage({ onNavigate, initialSearch }: { onNavigate: (path: string) => void; initialSearch?: string }) {
+export function StudentsPage({ initialSearch }: { initialSearch?: string }) {
   const [students, setStudents] = useState<StudentWithRelations[]>([]);
   const [courses, setCourses] = useState<Course[]>([]);
   const [units, setUnits] = useState<{ id: string; name: string }[]>([]);
@@ -73,7 +74,7 @@ export function StudentsPage({ onNavigate, initialSearch }: { onNavigate: (path:
   const handleSave = async (formData: Partial<Student>) => {
     try {
       if (editingStudent) {
-        const { id, created_at, updated_at, code, ...updateData } = editingStudent;
+        const { id } = editingStudent;
         const { error } = await supabase
           .from('students')
           .update({ ...formData, updated_at: new Date().toISOString() })
@@ -94,7 +95,7 @@ export function StudentsPage({ onNavigate, initialSearch }: { onNavigate: (path:
       setEditingStudent(null);
       loadStudents();
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'Erro ao salvar aluno');
+      toast(err instanceof Error ? err.message : 'Erro ao salvar aluno', 'error');
     }
   };
 
@@ -106,7 +107,7 @@ export function StudentsPage({ onNavigate, initialSearch }: { onNavigate: (path:
       await logActivity('student', 'Aluno excluido', `${student.first_name} ${student.last_name}`, 'student', student.id);
       loadStudents();
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'Erro ao excluir aluno');
+      toast(err instanceof Error ? err.message : 'Erro ao excluir aluno', 'error');
     }
   };
 
@@ -118,7 +119,10 @@ export function StudentsPage({ onNavigate, initialSearch }: { onNavigate: (path:
           setSelectedStudentId(null);
           loadStudents();
         }}
-        onNavigate={onNavigate}
+        onEdit={() => {
+          const s = students.find((st) => st.id === selectedStudentId);
+          if (s) { setEditingStudent(s); setModalOpen(true); }
+        }}
       />
     );
   }
@@ -284,6 +288,7 @@ function StudentFormModal({
   units: { id: string; name: string }[];
   onSave: (data: Partial<Student>) => void;
 }) {
+  const { toast } = useToast();
   const [formData, setFormData] = useState<Partial<Student>>({});
   const [saving, setSaving] = useState(false);
 
@@ -322,7 +327,7 @@ function StudentFormModal({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.first_name || !formData.last_name) {
-      alert('Nome e sobrenome sao obrigatorios');
+      toast('Nome e sobrenome sao obrigatorios', 'warning');
       return;
     }
     setSaving(true);
@@ -475,7 +480,7 @@ function StudentFormModal({
 // ============================================================
 // STUDENT PROFILE
 // ============================================================
-function StudentProfile({ studentId, onBack, onNavigate }: { studentId: string; onBack: () => void; onNavigate: (path: string) => void }) {
+function StudentProfile({ studentId, onBack, onEdit }: { studentId: string; onBack: () => void; onEdit: () => void }) {
   const [student, setStudent] = useState<StudentWithRelations | null>(null);
   const [enrollments, setEnrollments] = useState<(Enrollment & { course?: Course })[]>([]);
   const [classes, setClasses] = useState<(Class & { course?: Course })[]>([]);
@@ -809,7 +814,7 @@ function StudentProfile({ studentId, onBack, onNavigate }: { studentId: string; 
             </div>
           </div>
           <button
-            onClick={() => onNavigate('/students')}
+            onClick={onEdit}
             className="btn-ghost text-xs"
           >
             <Pencil size={14} /> Editar

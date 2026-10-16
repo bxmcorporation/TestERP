@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
+import { useToast } from '@/components/ui/Toast';
 import { supabase } from '@/lib/supabase';
 import { logActivity, generateCode } from '@/lib/helpers';
 import { PageHeader, Card, FormField } from '@/components/ui/PageHeader';
@@ -10,7 +11,7 @@ import {
   Wallet, Plus, Search, Pencil, Trash2, Save, X, CheckCircle, TrendingUp,
   TrendingDown, Clock, AlertTriangle, DollarSign,
 } from 'lucide-react';
-import type { FinancialItem, Student, Unit } from '@/lib/types';
+import type { FinancialItem } from '@/lib/types';
 
 const FINANCIAL_STATUS_OPTIONS = [
   { value: 'em_aberto', label: 'Em aberto' },
@@ -34,13 +35,18 @@ type DashboardStats = {
   vencido: number;
 };
 
-export function FinancialPage() {
+export function FinancialPage({ initialSearch }: { initialSearch?: string }) {
+  const { toast } = useToast();
   const [items, setItems] = useState<FinancialItemWithRelations[]>([]);
   const [students, setStudents] = useState<{ id: string; first_name: string; last_name: string }[]>([]);
   const [units, setUnits] = useState<{ id: string; name: string }[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState(initialSearch || '');
+
+  useEffect(() => {
+    if (initialSearch) setSearch(initialSearch);
+  }, [initialSearch]);
   const [typeFilter, setTypeFilter] = useState('all');
   const [statusFilter, setStatusFilter] = useState('all');
   const [modalOpen, setModalOpen] = useState(false);
@@ -106,7 +112,7 @@ export function FinancialPage() {
   const handleSave = async (formData: Partial<FinancialItem>) => {
     try {
       if (editingItem) {
-        const { id, created_at, updated_at, student, unit, ...updateData } = editingItem;
+        const { id } = editingItem;
         const { error } = await supabase
           .from('financial_items')
           .update({ ...formData, updated_at: new Date().toISOString() })
@@ -127,7 +133,7 @@ export function FinancialPage() {
       setEditingItem(null);
       load();
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'Erro ao salvar lançamento');
+      toast(err instanceof Error ? err.message : 'Erro ao salvar lançamento', 'error');
     }
   };
 
@@ -139,7 +145,7 @@ export function FinancialPage() {
       await logActivity('financial', 'Lançamento excluído', item.description, 'financial', item.id);
       load();
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'Erro ao excluir');
+      toast(err instanceof Error ? err.message : 'Erro ao excluir', 'error');
     }
   };
 
@@ -157,7 +163,7 @@ export function FinancialPage() {
       await logActivity('financial', 'Status atualizado', `${item.description}: ${newStatus}`, 'financial', item.id);
       load();
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'Erro ao atualizar status');
+      toast(err instanceof Error ? err.message : 'Erro ao atualizar status', 'error');
     }
   };
 
@@ -492,6 +498,7 @@ function FinancialFormModal({
   units: { id: string; name: string }[];
   onSave: (data: Partial<FinancialItem>) => void;
 }) {
+  const { toast } = useToast();
   const [formData, setFormData] = useState<Partial<FinancialItem>>({});
   const [saving, setSaving] = useState(false);
 
@@ -528,11 +535,11 @@ function FinancialFormModal({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.description) {
-      alert('Descrição é obrigatória');
+      toast('Descrição é obrigatória', 'warning');
       return;
     }
     if (formData.amount === undefined || formData.amount === null || Number(formData.amount) <= 0) {
-      alert('Valor deve ser maior que zero');
+      toast('Valor deve ser maior que zero', 'warning');
       return;
     }
     setSaving(true);

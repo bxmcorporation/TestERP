@@ -42,17 +42,17 @@ function App() {
 
   const renderPage = () => {
     if (path.startsWith('/dashboard')) return <DashboardPage onNavigate={navigate} />;
-    if (path.startsWith('/students')) return <StudentsPage onNavigate={navigate} initialSearch={search} />;
+    if (path.startsWith('/students')) return <StudentsPage initialSearch={search} />;
     if (path.startsWith('/guardians')) return <GuardiansPage initialSearch={search} />;
     if (path.startsWith('/enrollments')) return <EnrollmentsPage initialSearch={search} />;
     if (path.startsWith('/courses')) return <CoursesPage />;
     if (path.startsWith('/classes')) return <ClassesPage />;
-    if (path.startsWith('/teachers')) return <TeachersPage />;
-    if (path.startsWith('/rooms')) return <RoomsPage />;
+    if (path.startsWith('/teachers')) return <TeachersPage initialSearch={search} />;
+    if (path.startsWith('/rooms')) return <RoomsPage initialSearch={search} />;
     if (path.startsWith('/schedules')) return <SchedulesPage />;
     if (path.startsWith('/lessons')) return <LessonsPage />;
     if (path.startsWith('/attendance')) return <AttendancePage />;
-    if (path.startsWith('/financial')) return <FinancialPage />;
+    if (path.startsWith('/financial')) return <FinancialPage initialSearch={search} />;
     if (path.startsWith('/reports')) return <ReportsPage onNavigate={navigate} />;
     if (path.startsWith('/units')) return <UnitsPage />;
     if (path.startsWith('/settings')) return <SettingsPage />;
@@ -60,7 +60,7 @@ function App() {
   };
 
   return (
-    <AppShell currentPath={path} onNavigate={navigate}>
+    <AppShell currentPath={path} onNavigate={navigate} onSearch={handleSearch}>
       {renderPage()}
     </AppShell>
   );

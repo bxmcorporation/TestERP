@@ -6,7 +6,7 @@ import {
   Users, GraduationCap, School, ClipboardList, BookOpen, Wallet,
   TrendingUp, AlertCircle, ArrowRight, Clock, UserPlus,
 } from 'lucide-react';
-import type { Activity, Class, Enrollment, Lesson, Student } from '@/lib/types';
+import type { Activity, Class, Enrollment, Lesson } from '@/lib/types';
 
 type DashboardData = {
   totalStudents: number;

@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
+import { useToast } from '@/components/ui/Toast';
 import { supabase } from '@/lib/supabase';
 import { logActivity, generateCode } from '@/lib/helpers';
 import { PageHeader, Card, FormField } from '@/components/ui/PageHeader';
@@ -6,7 +7,7 @@ import { DataTable, type Column } from '@/components/ui/DataTable';
 import { Modal } from '@/components/ui/Modal';
 import { LoadingState, ErrorState, StatusBadge, EmptyState } from '@/components/ui/Feedback';
 import {
-  ClipboardList, Plus, Search, Pencil, Clock, Save, X, ArrowRight,
+  ClipboardList, Plus, Search, Pencil, Clock, Save, X,
 } from 'lucide-react';
 import type { Enrollment, Student, Course, Unit } from '@/lib/types';
 
@@ -76,7 +77,7 @@ export function EnrollmentsPage({ initialSearch }: { initialSearch?: string }) {
   const handleSave = async (formData: Partial<Enrollment>) => {
     try {
       if (editingEnrollment) {
-        const { id, ...updateData } = editingEnrollment;
+        const { id } = editingEnrollment;
         const { error } = await supabase.from('enrollments').update({ ...formData, updated_at: new Date().toISOString() }).eq('id', id);
         if (error) throw error;
         await logActivity('enrollment', 'Matricula atualizada', eStudentName(editingEnrollment), 'enrollment', id);
@@ -94,7 +95,7 @@ export function EnrollmentsPage({ initialSearch }: { initialSearch?: string }) {
       setEditingEnrollment(null);
       load();
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'Erro ao salvar');
+      toast(err instanceof Error ? err.message : 'Erro ao salvar', 'error');
     }
   };
 
@@ -105,7 +106,7 @@ export function EnrollmentsPage({ initialSearch }: { initialSearch?: string }) {
       await logActivity('enrollment', 'Status de matricula alterado', `${eStudentName(enrollment)}: ${newStatus}`, 'enrollment', enrollment.id);
       load();
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'Erro ao atualizar status');
+      toast(err instanceof Error ? err.message : 'Erro ao atualizar status', 'error');
     }
   };
 
@@ -243,6 +244,7 @@ function EnrollmentFormModal({
   units: Unit[];
   onSave: (data: Partial<Enrollment>) => void;
 }) {
+  const { toast } = useToast();
   const [formData, setFormData] = useState<Partial<Enrollment>>({});
   const [saving, setSaving] = useState(false);
 
@@ -271,7 +273,7 @@ function EnrollmentFormModal({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.student_id || !formData.course_id) { alert('Aluno e curso sao obrigatorios'); return; }
+    if (!formData.student_id || !formData.course_id) { toast('Aluno e curso sao obrigatorios', 'warning'); return; }
     setSaving(true);
     try {
       await onSave({

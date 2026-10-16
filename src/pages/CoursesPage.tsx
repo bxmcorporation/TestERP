@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import { supabase } from '@/lib/supabase';
 import { logActivity } from '@/lib/helpers';
+import { useToast } from '@/components/ui/Toast';
 import { PageHeader, Card, FormField } from '@/components/ui/PageHeader';
 import { DataTable, type Column } from '@/components/ui/DataTable';
 import { Modal } from '@/components/ui/Modal';
@@ -25,6 +26,7 @@ const COURSE_AREAS = [
 ];
 
 export function CoursesPage() {
+  const { toast } = useToast();
   const [courses, setCourses] = useState<CourseWithClassCount[]>([]);
   const [units, setUnits] = useState<Unit[]>([]);
   const [loading, setLoading] = useState(true);
@@ -67,7 +69,7 @@ export function CoursesPage() {
   const handleSave = async (formData: Partial<Course>) => {
     try {
       if (editingCourse) {
-        const { id, ...updateData } = editingCourse;
+        const { id } = editingCourse;
         const { error } = await supabase.from('courses').update({ ...formData, updated_at: new Date().toISOString() }).eq('id', id);
         if (error) throw error;
         await logActivity('course', 'Curso atualizado', formData.name, 'course', id);
@@ -80,12 +82,12 @@ export function CoursesPage() {
       setEditingCourse(null);
       load();
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'Erro ao salvar');
+      toast(err instanceof Error ? err.message : 'Erro ao salvar', 'error');
     }
   };
 
   const handleDelete = async (c: CourseWithClassCount) => {
-    if (c.classCount && c.classCount > 0) { alert('Nao e possivel excluir um curso com turmas vinculadas'); return; }
+    if (c.classCount && c.classCount > 0) { toast('Nao e possivel excluir um curso com turmas vinculadas', 'warning'); return; }
     if (!confirm(`Excluir o curso ${c.name}?`)) return;
     try {
       const { error } = await supabase.from('courses').delete().eq('id', c.id);
@@ -93,7 +95,7 @@ export function CoursesPage() {
       await logActivity('course', 'Curso excluido', c.name, 'course', c.id);
       load();
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'Erro ao excluir');
+      toast(err instanceof Error ? err.message : 'Erro ao excluir', 'error');
     }
   };
 
@@ -188,7 +190,7 @@ function CourseFormModal({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name) { alert('Nome e obrigatorio'); return; }
+    if (!formData.name) { toast('Nome e obrigatorio', 'warning'); return; }
     setSaving(true);
     try {
       await onSave({ ...formData, unit_id: formData.unit_id || null, duration_hours: formData.duration_hours ? Number(formData.duration_hours) : null });
@@ -322,7 +324,7 @@ export function ClassesPage() {
     try {
       const { teacher_ids, ...classData } = formData;
       if (editingClass) {
-        const { id, ...updateData } = editingClass;
+        const { id } = editingClass;
         const { error } = await supabase.from('classes').update({ ...classData, updated_at: new Date().toISOString() }).eq('id', id);
         if (error) throw error;
         if (teacher_ids) {
@@ -344,7 +346,7 @@ export function ClassesPage() {
       setEditingClass(null);
       load();
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'Erro ao salvar');
+      toast(err instanceof Error ? err.message : 'Erro ao salvar', 'error');
     }
   };
 
@@ -355,7 +357,7 @@ export function ClassesPage() {
       await logActivity('class', 'Status da turma alterado', `${cls.name}: ${newStatus}`, 'class', cls.id);
       load();
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'Erro ao atualizar status');
+      toast(err instanceof Error ? err.message : 'Erro ao atualizar status', 'error');
     }
   };
 
@@ -515,7 +517,7 @@ function ClassFormModal({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name || !formData.course_id) { alert('Nome e curso sao obrigatorios'); return; }
+    if (!formData.name || !formData.course_id) { toast('Nome e curso sao obrigatorios', 'warning'); return; }
     setSaving(true);
     try {
       await onSave({
@@ -630,6 +632,7 @@ function FormationModal({
   onConfirm: (cls: ClassWithRelations) => void;
   onUpdated: () => void;
 }) {
+  const { toast } = useToast();
   const [waitingStudents, setWaitingStudents] = useState<{ id: string; first_name: string; last_name: string; code: string; course_id: string }[]>([]);
   const [enrolledStudents, setEnrolledStudents] = useState<{ id: string; first_name: string; last_name: string; code: string }[]>([]);
   const [loading, setLoading] = useState(false);
@@ -672,51 +675,39 @@ function FormationModal({
   const assignStudent = async (studentId: string) => {
     if (!cls) return;
     if ((enrolledStudents.length) >= cls.max_capacity) {
-      alert('Capacidade maxima da turma atingida');
+      toast('Capacidade maxima da turma atingida', 'warning');
       return;
     }
     try {
-      const { error } = await supabase
-        .from('class_students')
-        .insert({ class_id: cls.id, student_id: studentId, status: 'ativo' });
+      const { error } = await supabase.rpc('assign_student_to_class', {
+        p_class_id: cls.id,
+        p_student_id: studentId,
+      });
       if (error) throw error;
 
-      // Update enrollment status
-      await supabase
-        .from('enrollments')
-        .update({ status: 'ativa' })
-        .eq('student_id', studentId)
-        .eq('course_id', cls.course_id)
-        .eq('status', 'aguardando_turma');
-
-      // Update student academic status
-      await supabase
-        .from('students')
-        .update({ academic_status: 'matriculado' })
-        .eq('id', studentId);
-
       await logActivity('class', 'Aluno associado a turma', `${cls.name}`, 'class', cls.id);
+      toast('Aluno associado com sucesso', 'success');
       loadStudents();
       onUpdated();
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'Erro ao associar aluno');
+      toast(err instanceof Error ? err.message : 'Erro ao associar aluno', 'error');
     }
   };
 
   const removeStudent = async (studentId: string) => {
     if (!cls) return;
     try {
-      const { error } = await supabase
-        .from('class_students')
-        .delete()
-        .eq('class_id', cls.id)
-        .eq('student_id', studentId);
+      const { error } = await supabase.rpc('remove_student_from_class', {
+        p_class_id: cls.id,
+        p_student_id: studentId,
+      });
       if (error) throw error;
       await logActivity('class', 'Aluno removido da turma', `${cls.name}`, 'class', cls.id);
+      toast('Aluno removido com sucesso', 'success');
       loadStudents();
       onUpdated();
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'Erro ao remover aluno');
+      toast(err instanceof Error ? err.message : 'Erro ao remover aluno', 'error');
     }
   };
 

@@ -1,12 +1,13 @@
 import { useEffect, useState, useCallback } from 'react';
 import { supabase } from '@/lib/supabase';
 import { logActivity } from '@/lib/helpers';
+import { useToast } from '@/components/ui/Toast';
 import { PageHeader, Card, FormField } from '@/components/ui/PageHeader';
 import { LoadingState, ErrorState, StatusBadge, EmptyState, Spinner } from '@/components/ui/Feedback';
 import {
   ClipboardCheck, Check, X, Clock as ClockIcon, AlertCircle, Save, History,
 } from 'lucide-react';
-import type { Lesson, Student, Attendance, Class } from '@/lib/types';
+import type { Lesson, Student, Attendance } from '@/lib/types';
 
 const ATTENDANCE_STATUSES = [
   { value: 'presente', label: 'Presente', color: 'green', icon: Check },
@@ -32,6 +33,7 @@ type HistoryItem = Lesson & {
 };
 
 export function AttendancePage() {
+  const { toast } = useToast();
   const [lessons, setLessons] = useState<LessonWithRelations[]>([]);
   const [selectedLessonId, setSelectedLessonId] = useState('');
   const [selectedLesson, setSelectedLesson] = useState<LessonWithRelations | null>(null);
@@ -145,27 +147,18 @@ export function AttendancePage() {
     setSaving(true);
     setSavedMessage(false);
     try {
-      const updates: Promise<void>[] = records.map((r) => {
-        if (r.attendanceId) {
-          return (async () => {
-            const { error } = await supabase
-              .from('attendance')
-              .update({ status: r.status, recorded_at: new Date().toISOString() })
-              .eq('id', r.attendanceId);
-            if (error) throw error;
-          })();
-        }
-        return (async () => {
-          const { error } = await supabase.from('attendance').insert({
-            lesson_id: selectedLessonId,
-            student_id: r.student.id,
-            status: r.status,
-          });
-          if (error) throw error;
-        })();
+      const payload = records.map((r) => ({
+        student_id: r.student.id,
+        status: r.status,
+      }));
+
+      const { error: rpcError } = await supabase.rpc('save_attendance', {
+        p_lesson_id: selectedLessonId,
+        p_records: payload,
       });
 
-      await Promise.all(updates);
+      if (rpcError) throw rpcError;
+
       await logActivity(
         'attendance',
         'Frequência registrada',
@@ -178,7 +171,7 @@ export function AttendancePage() {
       // Reload records to get fresh IDs
       loadRecords(selectedLessonId);
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'Erro ao salvar frequência');
+      toast(err instanceof Error ? err.message : 'Erro ao salvar frequência', 'error');
     } finally {
       setSaving(false);
     }

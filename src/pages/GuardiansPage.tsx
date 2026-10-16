@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
+import { useToast } from '@/components/ui/Toast';
 import { supabase } from '@/lib/supabase';
 import { logActivity } from '@/lib/helpers';
 import { PageHeader, Card, FormField } from '@/components/ui/PageHeader';
@@ -6,7 +7,7 @@ import { DataTable, type Column } from '@/components/ui/DataTable';
 import { Modal } from '@/components/ui/Modal';
 import { LoadingState, ErrorState, StatusBadge, EmptyState } from '@/components/ui/Feedback';
 import {
-  UserCog, UserPlus, Search, Pencil, Trash2, Phone, Mail, Users, Save, X, Link2,
+  UserCog, UserPlus, Search, Pencil, Trash2, Phone, Mail, Save, X, Link2,
 } from 'lucide-react';
 import type { Guardian, Student, StudentGuardian } from '@/lib/types';
 
@@ -59,7 +60,7 @@ export function GuardiansPage({ initialSearch }: { initialSearch?: string }) {
   const handleSave = async (formData: Partial<Guardian>) => {
     try {
       if (editingGuardian) {
-        const { id, ...updateData } = editingGuardian;
+        const { id } = editingGuardian;
         const { error } = await supabase
           .from('guardians')
           .update({ ...formData, updated_at: new Date().toISOString() })
@@ -79,7 +80,7 @@ export function GuardiansPage({ initialSearch }: { initialSearch?: string }) {
       setEditingGuardian(null);
       load();
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'Erro ao salvar');
+      toast(err instanceof Error ? err.message : 'Erro ao salvar', 'error');
     }
   };
 
@@ -91,7 +92,7 @@ export function GuardiansPage({ initialSearch }: { initialSearch?: string }) {
       await logActivity('guardian', 'Responsavel excluido', `${g.first_name} ${g.last_name}`, 'guardian', g.id);
       load();
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'Erro ao excluir');
+      toast(err instanceof Error ? err.message : 'Erro ao excluir', 'error');
     }
   };
 
@@ -111,7 +112,7 @@ export function GuardiansPage({ initialSearch }: { initialSearch?: string }) {
       setLinkGuardian(null);
       load();
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'Erro ao vincular');
+      toast(err instanceof Error ? err.message : 'Erro ao vincular', 'error');
     }
   };
 
@@ -260,6 +261,7 @@ function GuardianFormModal({
   guardian: GuardianWithStudents | null;
   onSave: (data: Partial<Guardian>) => void;
 }) {
+  const { toast } = useToast();
   const [formData, setFormData] = useState<Partial<Guardian>>({});
   const [saving, setSaving] = useState(false);
 
@@ -288,7 +290,7 @@ function GuardianFormModal({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.first_name || !formData.last_name) { alert('Nome e sobrenome sao obrigatorios'); return; }
+    if (!formData.first_name || !formData.last_name) { toast('Nome e sobrenome sao obrigatorios', 'warning'); return; }
     setSaving(true);
     try {
       await onSave({
@@ -370,6 +372,7 @@ function LinkStudentModal({
   students: Student[];
   onLink: (guardianId: string, studentId: string, rel: string, isPrimary: boolean, isFinancial: boolean) => void;
 }) {
+  const { toast } = useToast();
   const [studentId, setStudentId] = useState('');
   const [relType, setRelType] = useState('pai_mae');
   const [isPrimary, setIsPrimary] = useState(false);
@@ -386,7 +389,7 @@ function LinkStudentModal({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!studentId) { alert('Selecione um aluno'); return; }
+    if (!studentId) { toast('Selecione um aluno', 'warning'); return; }
     onLink(guardian.id, studentId, relType, isPrimary, isFinancial);
   };
 

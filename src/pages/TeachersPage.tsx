@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from 'react';
+import { useToast } from '@/components/ui/Toast';
 import { supabase } from '@/lib/supabase';
-import { logActivity, generateCode } from '@/lib/helpers';
+import { logActivity } from '@/lib/helpers';
 import { PageHeader, Card, FormField } from '@/components/ui/PageHeader';
 import { DataTable, type Column } from '@/components/ui/DataTable';
 import { Modal } from '@/components/ui/Modal';
@@ -9,19 +10,24 @@ import {
   GraduationCap, UserPlus, Search, Pencil, Trash2, Mail, Phone,
   Save, X, Plus,
 } from 'lucide-react';
-import type { Teacher, Unit } from '@/lib/types';
+import type { Teacher } from '@/lib/types';
 
 type TeacherWithRelations = Teacher & {
   unit?: { name: string };
   classCount?: number;
 };
 
-export function TeachersPage() {
+export function TeachersPage({ initialSearch }: { initialSearch?: string }) {
+  const { toast } = useToast();
   const [teachers, setTeachers] = useState<TeacherWithRelations[]>([]);
   const [units, setUnits] = useState<{ id: string; name: string }[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState(initialSearch || '');
+
+  useEffect(() => {
+    if (initialSearch) setSearch(initialSearch);
+  }, [initialSearch]);
   const [statusFilter, setStatusFilter] = useState('all');
   const [modalOpen, setModalOpen] = useState(false);
   const [editingTeacher, setEditingTeacher] = useState<TeacherWithRelations | null>(null);
@@ -73,7 +79,7 @@ export function TeachersPage() {
   const handleSave = async (formData: Partial<Teacher>) => {
     try {
       if (editingTeacher) {
-        const { id, created_at, updated_at, classCount, ...updateData } = editingTeacher;
+        const { id } = editingTeacher;
         const { error } = await supabase
           .from('teachers')
           .update({ ...formData, updated_at: new Date().toISOString() })
@@ -105,13 +111,13 @@ export function TeachersPage() {
       setEditingTeacher(null);
       load();
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'Erro ao salvar professor');
+      toast(err instanceof Error ? err.message : 'Erro ao salvar professor', 'error');
     }
   };
 
   const handleDelete = async (teacher: TeacherWithRelations) => {
     if (teacher.classCount && teacher.classCount > 0) {
-      alert('Não é possível excluir um professor com turmas vinculadas');
+      toast('Não é possível excluir um professor com turmas vinculadas', 'warning');
       return;
     }
     if (!confirm(`Excluir o professor ${teacher.first_name} ${teacher.last_name}?`)) return;
@@ -127,7 +133,7 @@ export function TeachersPage() {
       );
       load();
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'Erro ao excluir professor');
+      toast(err instanceof Error ? err.message : 'Erro ao excluir professor', 'error');
     }
   };
 
@@ -312,6 +318,7 @@ function TeacherFormModal({
   units: { id: string; name: string }[];
   onSave: (data: Partial<Teacher>) => void;
 }) {
+  const { toast } = useToast();
   const [formData, setFormData] = useState<Partial<Teacher> & { availabilityList?: string[] }>({});
   const [availabilityInput, setAvailabilityInput] = useState('');
   const [saving, setSaving] = useState(false);
@@ -372,7 +379,7 @@ function TeacherFormModal({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.first_name || !formData.last_name) {
-      alert('Nome e sobrenome são obrigatórios');
+      toast('Nome e sobrenome são obrigatórios', 'warning');
       return;
     }
     setSaving(true);

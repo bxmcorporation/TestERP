@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
+import { useToast } from '@/components/ui/Toast';
 import { supabase } from '@/lib/supabase';
 import { logActivity } from '@/lib/helpers';
 import { PageHeader, Card, FormField } from '@/components/ui/PageHeader';
@@ -9,7 +10,7 @@ import { Tabs } from '@/components/ui/Tabs';
 import {
   CalendarClock, Plus, Pencil, Trash2, Save, X, AlertTriangle, Clock, Grid3x3,
 } from 'lucide-react';
-import type { Schedule, Class, Teacher, Room } from '@/lib/types';
+import type { Schedule } from '@/lib/types';
 
 const WEEKDAYS = [
   { value: 0, label: 'Domingo' },
@@ -30,6 +31,7 @@ type ScheduleWithRelations = Schedule & {
 };
 
 export function SchedulesPage() {
+  const { toast } = useToast();
   const [schedules, setSchedules] = useState<ScheduleWithRelations[]>([]);
   const [classes, setClasses] = useState<{ id: string; name: string }[]>([]);
   const [teachers, setTeachers] = useState<{ id: string; first_name: string; last_name: string }[]>([]);
@@ -122,7 +124,7 @@ export function SchedulesPage() {
       }
 
       if (editingSchedule) {
-        const { id, created_at, ...updateData } = editingSchedule;
+        const { id } = editingSchedule;
         const { error } = await supabase
           .from('schedules')
           .update({ ...formData, room_id: formData.room_id || null })
@@ -142,7 +144,7 @@ export function SchedulesPage() {
       setEditingSchedule(null);
       load();
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'Erro ao salvar horário');
+      toast(err instanceof Error ? err.message : 'Erro ao salvar horário', 'error');
     }
   };
 
@@ -154,7 +156,7 @@ export function SchedulesPage() {
       await logActivity('schedule', 'Horário excluído', 'Horário removido', 'schedule', schedule.id);
       load();
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'Erro ao excluir horário');
+      toast(err instanceof Error ? err.message : 'Erro ao excluir horário', 'error');
     }
   };
 
@@ -374,6 +376,7 @@ function ScheduleFormModal({
   rooms: { id: string; name: string }[];
   onSave: (data: Partial<Schedule>) => void;
 }) {
+  const { toast } = useToast();
   const [formData, setFormData] = useState<Partial<Schedule>>({});
   const [saving, setSaving] = useState(false);
 
@@ -406,11 +409,11 @@ function ScheduleFormModal({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.class_id || !formData.teacher_id) {
-      alert('Turma e professor são obrigatórios');
+      toast('Turma e professor são obrigatórios', 'warning');
       return;
     }
     if (formData.start_time && formData.end_time && formData.start_time >= formData.end_time) {
-      alert('O horário de início deve ser anterior ao horário de fim');
+      toast('O horário de início deve ser anterior ao horário de fim', 'warning');
       return;
     }
     setSaving(true);

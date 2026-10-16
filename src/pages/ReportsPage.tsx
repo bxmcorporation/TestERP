@@ -4,7 +4,7 @@ import { PageHeader, Card } from '@/components/ui/PageHeader';
 import { LoadingState, ErrorState, EmptyState } from '@/components/ui/Feedback';
 import {
   BarChart3, Users, GraduationCap, School, Wallet, ClipboardCheck, TrendingUp,
-  TrendingDown, DollarSign, Calendar, FileText, ArrowRight, Activity,
+  TrendingDown, DollarSign, Calendar, ArrowRight, Activity,
 } from 'lucide-react';
 
 type ReportStats = {

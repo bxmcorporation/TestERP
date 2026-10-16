@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
+import { useToast } from '@/components/ui/Toast';
 import { supabase } from '@/lib/supabase';
 import { logActivity, generateCode } from '@/lib/helpers';
 import { PageHeader, Card, FormField } from '@/components/ui/PageHeader';
@@ -6,18 +7,23 @@ import { DataTable, type Column } from '@/components/ui/DataTable';
 import { Modal } from '@/components/ui/Modal';
 import { LoadingState, ErrorState, StatusBadge, EmptyState } from '@/components/ui/Feedback';
 import { DoorOpen, Plus, Search, Pencil, Trash2, Save, X, MapPin, Users } from 'lucide-react';
-import type { Room, Unit } from '@/lib/types';
+import type { Room } from '@/lib/types';
 
 type RoomWithRelations = Room & {
   unit?: { name: string };
 };
 
-export function RoomsPage() {
+export function RoomsPage({ initialSearch }: { initialSearch?: string }) {
+  const { toast } = useToast();
   const [rooms, setRooms] = useState<RoomWithRelations[]>([]);
   const [units, setUnits] = useState<{ id: string; name: string }[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState(initialSearch || '');
+
+  useEffect(() => {
+    if (initialSearch) setSearch(initialSearch);
+  }, [initialSearch]);
   const [statusFilter, setStatusFilter] = useState('all');
   const [modalOpen, setModalOpen] = useState(false);
   const [editingRoom, setEditingRoom] = useState<RoomWithRelations | null>(null);
@@ -58,7 +64,7 @@ export function RoomsPage() {
   const handleSave = async (formData: Partial<Room>) => {
     try {
       if (editingRoom) {
-        const { id, created_at, ...updateData } = editingRoom;
+        const { id } = editingRoom;
         const { error } = await supabase
           .from('rooms')
           .update({ ...formData, unit_id: formData.unit_id || null })
@@ -82,7 +88,7 @@ export function RoomsPage() {
       setEditingRoom(null);
       load();
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'Erro ao salvar sala');
+      toast(err instanceof Error ? err.message : 'Erro ao salvar sala', 'error');
     }
   };
 
@@ -94,7 +100,7 @@ export function RoomsPage() {
       await logActivity('room', 'Sala excluída', room.name, 'room', room.id);
       load();
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'Erro ao excluir sala');
+      toast(err instanceof Error ? err.message : 'Erro ao excluir sala', 'error');
     }
   };
 
@@ -268,6 +274,7 @@ function RoomFormModal({
   units: { id: string; name: string }[];
   onSave: (data: Partial<Room>) => void;
 }) {
+  const { toast } = useToast();
   const [formData, setFormData] = useState<Partial<Room>>({});
   const [saving, setSaving] = useState(false);
 
@@ -296,11 +303,11 @@ function RoomFormModal({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name) {
-      alert('Nome é obrigatório');
+      toast('Nome é obrigatório', 'warning');
       return;
     }
     if (!formData.capacity || formData.capacity < 1) {
-      alert('Capacidade deve ser maior que zero');
+      toast('Capacidade deve ser maior que zero', 'warning');
       return;
     }
     setSaving(true);

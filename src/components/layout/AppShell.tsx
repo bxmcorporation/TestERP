@@ -5,15 +5,15 @@ type AppShellProps = {
   children: ReactNode;
   currentPath: string;
   onNavigate: (path: string) => void;
+  onSearch: (query: string) => void;
 };
 
-export function AppShell({ children, currentPath, onNavigate }: AppShellProps) {
+export function AppShell({ children, currentPath, onNavigate, onSearch }: AppShellProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
 
   const handleSearch = useCallback((query: string) => {
-    setSearchQuery(query);
-  }, []);
+    onSearch(query);
+  }, [onSearch]);
 
   return (
     <div className="min-h-screen bg-surface-base">

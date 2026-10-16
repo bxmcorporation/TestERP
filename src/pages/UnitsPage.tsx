@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
+import { useToast } from '@/components/ui/Toast';
 import { supabase } from '@/lib/supabase';
 import { logActivity, generateCode } from '@/lib/helpers';
 import { PageHeader, Card, FormField } from '@/components/ui/PageHeader';
@@ -6,7 +7,7 @@ import { DataTable, type Column } from '@/components/ui/DataTable';
 import { Modal } from '@/components/ui/Modal';
 import { LoadingState, ErrorState, StatusBadge, EmptyState } from '@/components/ui/Feedback';
 import {
-  Building2, Plus, Search, Pencil, Trash2, Save, X, Mail, Phone, MapPin,
+  Building2, Plus, Search, Pencil, Trash2, Save, X, MapPin,
 } from 'lucide-react';
 import type { Unit } from '@/lib/types';
 
@@ -16,6 +17,7 @@ type UnitWithCounts = Unit & {
 };
 
 export function UnitsPage() {
+  const { toast } = useToast();
   const [units, setUnits] = useState<UnitWithCounts[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -68,7 +70,7 @@ export function UnitsPage() {
   const handleSave = async (formData: Partial<Unit>) => {
     try {
       if (editingUnit) {
-        const { id, created_at, updated_at, studentCount, teacherCount, ...updateData } = editingUnit;
+        const { id } = editingUnit;
         const { error } = await supabase
           .from('units')
           .update({ ...formData, updated_at: new Date().toISOString() })
@@ -92,13 +94,13 @@ export function UnitsPage() {
       setEditingUnit(null);
       load();
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'Erro ao salvar unidade');
+      toast(err instanceof Error ? err.message : 'Erro ao salvar unidade', 'error');
     }
   };
 
   const handleDelete = async (unit: UnitWithCounts) => {
     if ((unit.studentCount || 0) > 0 || (unit.teacherCount || 0) > 0) {
-      alert('Não é possível excluir uma unidade com alunos ou professores vinculados');
+      toast('Não é possível excluir uma unidade com alunos ou professores vinculados', 'warning');
       return;
     }
     if (!confirm(`Excluir a unidade ${unit.name}?`)) return;
@@ -108,7 +110,7 @@ export function UnitsPage() {
       await logActivity('unit', 'Unidade excluída', unit.name, 'unit', unit.id);
       load();
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'Erro ao excluir unidade');
+      toast(err instanceof Error ? err.message : 'Erro ao excluir unidade', 'error');
     }
   };
 
@@ -277,6 +279,7 @@ function UnitFormModal({
   unit: UnitWithCounts | null;
   onSave: (data: Partial<Unit>) => void;
 }) {
+  const { toast } = useToast();
   const [formData, setFormData] = useState<Partial<Unit>>({});
   const [saving, setSaving] = useState(false);
 
@@ -311,7 +314,7 @@ function UnitFormModal({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name) {
-      alert('Nome é obrigatório');
+      toast('Nome é obrigatório', 'warning');
       return;
     }
     setSaving(true);
