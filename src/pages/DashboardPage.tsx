@@ -183,15 +183,15 @@ export function DashboardPage({ onNavigate }: { onNavigate: (path: string) => vo
             className={`glass-card glass-hover p-4 text-left group ${m.highlight ? 'border-yellow-500/20' : ''}`}
           >
             <div className="flex items-start justify-between mb-3">
-              <div className={`p-2 rounded-lg ${m.accent ? 'bg-rayon-orange/10 text-rayon-orange border border-rayon-orange/20' : 'bg-white/[0.04] text-white/50'}`}>
+              <div className={`p-2 rounded-lg ${m.accent ? 'bg-rayon-orange/10 text-rayon-orange border border-rayon-orange/20' : 'bg-gray-100 text-gray-400'}`}>
                 {m.icon}
               </div>
               {m.highlight && (
-                <AlertCircle size={14} className="text-yellow-400" />
+                <AlertCircle size={14} className="text-yellow-600" />
               )}
             </div>
-            <p className="text-2xl font-display font-bold text-white">{m.value}</p>
-            <p className="text-xs text-white/40 mt-0.5">{m.label}</p>
+            <p className="text-2xl font-display font-bold text-gray-900">{m.value}</p>
+            <p className="text-xs text-gray-400 mt-0.5">{m.label}</p>
           </button>
         ))}
       </div>
@@ -200,12 +200,12 @@ export function DashboardPage({ onNavigate }: { onNavigate: (path: string) => vo
       {(data.openFinancialItems > 0 || data.overdueFinancialItems > 0) && (
         <Card className="mb-6 border-yellow-500/15">
           <div className="flex items-center gap-4">
-            <div className="p-3 rounded-xl bg-yellow-500/10 border border-yellow-500/20 text-yellow-400">
+            <div className="p-3 rounded-xl bg-yellow-500/10 border border-yellow-500/20 text-yellow-600">
               <Wallet size={22} />
             </div>
             <div className="flex-1">
-              <h3 className="text-sm font-semibold text-white">Pendencias Financeiras</h3>
-              <p className="text-xs text-white/50 mt-0.5">
+              <h3 className="text-sm font-semibold text-gray-900">Pendencias Financeiras</h3>
+              <p className="text-xs text-gray-400 mt-0.5">
                 {data.openFinancialItems} cobrancas em aberto
                 {data.overdueFinancialItems > 0 && ` · ${data.overdueFinancialItems} vencidas`}
               </p>
@@ -222,23 +222,23 @@ export function DashboardPage({ onNavigate }: { onNavigate: (path: string) => vo
         {/* Recent Activities */}
         <Card>
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-sm font-semibold text-white/80">Atividades Recentes</h3>
-            <TrendingUp size={16} className="text-white/30" />
+            <h3 className="text-sm font-semibold text-gray-700">Atividades Recentes</h3>
+            <TrendingUp size={16} className="text-gray-300" />
           </div>
           {activities.length === 0 ? (
-            <p className="text-sm text-white/30 py-8 text-center">Nenhuma atividade registrada</p>
+            <p className="text-sm text-gray-300 py-8 text-center">Nenhuma atividade registrada</p>
           ) : (
             <div className="space-y-2">
               {activities.map((act) => (
                 <div key={act.id} className="flex items-start gap-3 py-2 border-b border-edge/subtle last:border-0">
-                  <div className="p-1.5 rounded-md bg-white/[0.04] text-white/40 mt-0.5">
+                  <div className="p-1.5 rounded-md bg-gray-100 text-gray-400 mt-0.5">
                     {activityIcons[act.type] || <AlertCircle size={14} />}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm text-white/80 truncate">{act.title}</p>
-                    {act.description && <p className="text-xs text-white/40 truncate">{act.description}</p>}
+                    <p className="text-sm text-gray-700 truncate">{act.title}</p>
+                    {act.description && <p className="text-xs text-gray-400 truncate">{act.description}</p>}
                   </div>
-                  <span className="text-xs text-white/30 shrink-0">{act.age}</span>
+                  <span className="text-xs text-gray-300 shrink-0">{act.age}</span>
                 </div>
               ))}
             </div>
@@ -248,17 +248,17 @@ export function DashboardPage({ onNavigate }: { onNavigate: (path: string) => vo
         {/* Upcoming Lessons */}
         <Card>
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-sm font-semibold text-white/80">Proximas Aulas</h3>
-            <BookOpen size={16} className="text-white/30" />
+            <h3 className="text-sm font-semibold text-gray-700">Proximas Aulas</h3>
+            <BookOpen size={16} className="text-gray-300" />
           </div>
           {upcomingLessons.length === 0 ? (
-            <p className="text-sm text-white/30 py-8 text-center">Nenhuma aula agendada</p>
+            <p className="text-sm text-gray-300 py-8 text-center">Nenhuma aula agendada</p>
           ) : (
             <div className="space-y-2">
               {upcomingLessons.map((lesson) => (
                 <div key={lesson.id} className="flex items-center gap-3 py-2 border-b border-edge/subtle last:border-0">
                   <div className="text-center shrink-0">
-                    <p className="text-xs text-white/30">
+                    <p className="text-xs text-gray-300">
                       {new Date(lesson.lesson_date).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' })}
                     </p>
                     <p className="text-xs text-rayon-orange font-medium">
@@ -266,8 +266,8 @@ export function DashboardPage({ onNavigate }: { onNavigate: (path: string) => vo
                     </p>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm text-white/80 truncate">{lesson.title}</p>
-                    <p className="text-xs text-white/40 truncate">{lesson.class_name}</p>
+                    <p className="text-sm text-gray-700 truncate">{lesson.title}</p>
+                    <p className="text-xs text-gray-400 truncate">{lesson.class_name}</p>
                   </div>
                 </div>
               ))}
@@ -280,7 +280,7 @@ export function DashboardPage({ onNavigate }: { onNavigate: (path: string) => vo
       {formingClasses.length > 0 && (
         <Card className="mb-6">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-sm font-semibold text-white/80">Turmas em Formacao</h3>
+            <h3 className="text-sm font-semibold text-gray-700">Turmas em Formacao</h3>
             <button onClick={() => onNavigate('/classes')} className="text-xs text-rayon-orange hover:underline">
               Ver todas
             </button>
@@ -289,17 +289,17 @@ export function DashboardPage({ onNavigate }: { onNavigate: (path: string) => vo
             {formingClasses.map((cls) => {
               const pct = cls.max_capacity ? (cls.occupied || 0) / cls.max_capacity * 100 : 0;
               return (
-                <div key={cls.id} className="p-4 rounded-lg bg-white/[0.02] border border-edge">
+                <div key={cls.id} className="p-4 rounded-lg bg-gray-50 border border-edge">
                   <div className="flex items-center justify-between mb-2">
-                    <p className="text-sm font-medium text-white/80">{cls.name}</p>
+                    <p className="text-sm font-medium text-gray-700">{cls.name}</p>
                     <StatusBadge status={cls.status} />
                   </div>
-                  <p className="text-xs text-white/40 mb-3">{cls.course_name}</p>
+                  <p className="text-xs text-gray-400 mb-3">{cls.course_name}</p>
                   <div className="flex items-center justify-between text-xs mb-1.5">
-                    <span className="text-white/50">{cls.occupied || 0} / {cls.max_capacity} alunos</span>
-                    <span className="text-white/30">Min: {cls.min_capacity}</span>
+                    <span className="text-gray-400">{cls.occupied || 0} / {cls.max_capacity} alunos</span>
+                    <span className="text-gray-300">Min: {cls.min_capacity}</span>
                   </div>
-                  <div className="h-2 rounded-full bg-white/[0.06] overflow-hidden">
+                  <div className="h-2 rounded-full bg-gray-100 overflow-hidden">
                     <div
                       className={`h-full rounded-full transition-all ${pct >= 100 ? 'bg-red-500' : pct >= (cls.min_capacity / cls.max_capacity * 100) ? 'bg-green-500' : 'bg-rayon-orange'}`}
                       style={{ width: `${Math.min(pct, 100)}%` }}
@@ -315,22 +315,22 @@ export function DashboardPage({ onNavigate }: { onNavigate: (path: string) => vo
       {/* Recent Enrollments */}
       <Card>
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-sm font-semibold text-white/80">Matriculas Recentes</h3>
+          <h3 className="text-sm font-semibold text-gray-700">Matriculas Recentes</h3>
           <button onClick={() => onNavigate('/enrollments')} className="text-xs text-rayon-orange hover:underline">
             Ver todas
           </button>
         </div>
         {recentEnrollments.length === 0 ? (
-          <p className="text-sm text-white/30 py-8 text-center">Nenhuma matricula recente</p>
+          <p className="text-sm text-gray-300 py-8 text-center">Nenhuma matricula recente</p>
         ) : (
           <div className="space-y-2">
             {recentEnrollments.map((enr) => (
               <div key={enr.id} className="flex items-center gap-3 py-2 border-b border-edge/subtle last:border-0">
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm text-white/80 truncate">{enr.student_name}</p>
-                  <p className="text-xs text-white/40 truncate">{enr.course_name}</p>
+                  <p className="text-sm text-gray-700 truncate">{enr.student_name}</p>
+                  <p className="text-xs text-gray-400 truncate">{enr.course_name}</p>
                 </div>
-                <span className="text-xs text-white/30 shrink-0">
+                <span className="text-xs text-gray-300 shrink-0">
                   {new Date(enr.enrollment_date).toLocaleDateString('pt-BR')}
                 </span>
                 <StatusBadge status={enr.status} />

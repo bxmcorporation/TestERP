@@ -60,7 +60,7 @@ export function DataTable<T>({
               {allColumns.map((col) => (
                 <th
                   key={col.key}
-                  className={`text-left font-medium text-white/40 px-4 py-3 whitespace-nowrap ${col.className || ''}`}
+                  className={`text-left font-medium text-gray-400 px-4 py-3 whitespace-nowrap ${col.className || ''}`}
                 >
                   {col.label}
                 </th>
@@ -73,11 +73,11 @@ export function DataTable<T>({
                 key={rowKey(row)}
                 onClick={() => onRowClick?.(row)}
                 className={`border-b border-edge/subtle transition-colors ${
-                  onRowClick ? 'cursor-pointer hover:bg-white/[0.02]' : ''
+                  onRowClick ? 'cursor-pointer hover:bg-gray-50' : ''
                 }`}
               >
                 {columns.map((col) => (
-                  <td key={col.key} className={`px-4 py-3 text-white/80 ${col.className || ''}`}>
+                  <td key={col.key} className={`px-4 py-3 text-gray-700 ${col.className || ''}`}>
                     {col.render ? col.render(row) : String((row as Record<string, unknown>)[col.key] ?? '—')}
                   </td>
                 ))}
@@ -94,38 +94,38 @@ export function DataTable<T>({
 
       {totalPages > 1 && (
         <div className="flex items-center justify-between mt-4 px-1">
-          <span className="text-xs text-white/40">
+          <span className="text-xs text-gray-400">
             {start + 1}–{Math.min(start + pageSize, data.length)} de {data.length}
           </span>
           <div className="flex items-center gap-1">
             <button
               onClick={() => setPage(1)}
               disabled={page === 1}
-              className="p-1.5 rounded-md text-white/40 hover:text-white hover:bg-white/[0.06] disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+              className="p-1.5 rounded-md text-gray-400 hover:text-gray-900 hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
             >
               <ChevronsLeft size={16} />
             </button>
             <button
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               disabled={page === 1}
-              className="p-1.5 rounded-md text-white/40 hover:text-white hover:bg-white/[0.06] disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+              className="p-1.5 rounded-md text-gray-400 hover:text-gray-900 hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
             >
               <ChevronLeft size={16} />
             </button>
-            <span className="text-xs text-white/60 px-2 min-w-[60px] text-center">
+            <span className="text-xs text-gray-500 px-2 min-w-[60px] text-center">
               {page} / {totalPages}
             </span>
             <button
               onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
               disabled={page === totalPages}
-              className="p-1.5 rounded-md text-white/40 hover:text-white hover:bg-white/[0.06] disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+              className="p-1.5 rounded-md text-gray-400 hover:text-gray-900 hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
             >
               <ChevronRight size={16} />
             </button>
             <button
               onClick={() => setPage(totalPages)}
               disabled={page === totalPages}
-              className="p-1.5 rounded-md text-white/40 hover:text-white hover:bg-white/[0.06] disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+              className="p-1.5 rounded-md text-gray-400 hover:text-gray-900 hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
             >
               <ChevronsRight size={16} />
             </button>

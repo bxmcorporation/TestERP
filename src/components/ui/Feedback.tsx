@@ -4,12 +4,12 @@ import { Loader2 } from 'lucide-react';
 type BadgeVariant = 'neutral' | 'success' | 'warning' | 'error' | 'info' | 'orange';
 
 const variantStyles: Record<BadgeVariant, string> = {
-  neutral: 'bg-white/[0.06] text-white/60 border border-white/[0.08]',
-  success: 'bg-green-500/10 text-green-400 border border-green-500/20',
-  warning: 'bg-yellow-500/10 text-yellow-400 border border-yellow-500/20',
-  error: 'bg-red-500/10 text-red-400 border border-red-500/20',
-  info: 'bg-blue-500/10 text-blue-400 border border-blue-500/20',
-  orange: 'bg-rayon-orange/10 text-rayon-orange-400 border border-rayon-orange/20',
+  neutral: 'bg-gray-100 text-gray-500 border border-gray-200',
+  success: 'bg-green-500/10 text-green-600 border border-green-500/20',
+  warning: 'bg-yellow-500/10 text-yellow-600 border border-yellow-500/20',
+  error: 'bg-red-500/10 text-red-600 border border-red-500/20',
+  info: 'bg-blue-500/10 text-blue-600 border border-blue-500/20',
+  orange: 'bg-rayon-orange/10 text-rayon-orange-600 border border-rayon-orange/20',
 };
 
 export function Badge({
@@ -76,7 +76,7 @@ export function LoadingState({ message = 'Carregando...' }: { message?: string }
   return (
     <div className="flex flex-col items-center justify-center py-20 gap-3">
       <Spinner size={28} />
-      <p className="text-sm text-white/40">{message}</p>
+      <p className="text-sm text-gray-400">{message}</p>
     </div>
   );
 }
@@ -95,12 +95,12 @@ export function EmptyState({
   return (
     <div className="flex flex-col items-center justify-center py-16 text-center">
       {icon && (
-        <div className="mb-4 p-3 rounded-2xl bg-white/[0.03] border border-edge text-white/30">
+        <div className="mb-4 p-3 rounded-2xl bg-gray-100 border border-edge text-gray-400">
           {icon}
         </div>
       )}
-      <h3 className="text-base font-semibold text-white/70">{title}</h3>
-      {description && <p className="text-sm text-white/40 mt-1 max-w-sm">{description}</p>}
+      <h3 className="text-base font-semibold text-gray-600">{title}</h3>
+      {description && <p className="text-sm text-gray-400 mt-1 max-w-sm">{description}</p>}
       {action && <div className="mt-4">{action}</div>}
     </div>
   );
@@ -109,13 +109,13 @@ export function EmptyState({
 export function ErrorState({ message, onRetry }: { message: string; onRetry?: () => void }) {
   return (
     <div className="flex flex-col items-center justify-center py-16 text-center">
-      <div className="mb-4 p-3 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-400">
+      <div className="mb-4 p-3 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-600">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <path d="M12 9v4M12 17h.01M4.93 19h14.14a2 2 0 001.74-3l-7.07-12a2 2 0 00-3.48 0l-7.07 12a2 2 0 001.74 3z" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </div>
-      <h3 className="text-base font-semibold text-white/70">Erro ao carregar</h3>
-      <p className="text-sm text-white/40 mt-1 max-w-sm">{message}</p>
+      <h3 className="text-base font-semibold text-gray-600">Erro ao carregar</h3>
+      <p className="text-sm text-gray-400 mt-1 max-w-sm">{message}</p>
       {onRetry && (
         <button onClick={onRetry} className="btn-ghost mt-4">
           Tentar novamente
@@ -127,6 +127,6 @@ export function ErrorState({ message, onRetry }: { message: string; onRetry?: ()
 
 export function Skeleton({ className = '' }: { className?: string }) {
   return (
-    <div className={`animate-pulse-soft rounded-lg bg-white/[0.04] ${className}`} />
+    <div className={`animate-pulse-soft rounded-lg bg-gray-100 ${className}`} />
   );
 }

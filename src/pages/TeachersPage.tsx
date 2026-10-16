@@ -141,7 +141,7 @@ export function TeachersPage() {
             {t.first_name.charAt(0)}
             {t.last_name.charAt(0)}
           </div>
-          <span className="text-white/90 font-medium">
+          <span className="text-gray-800 font-medium">
             {t.first_name} {t.last_name}
           </span>
         </div>
@@ -150,18 +150,18 @@ export function TeachersPage() {
     {
       key: 'specialty',
       label: 'Especialidade',
-      render: (t) => <span className="text-white/60">{t.specialty || '—'}</span>,
+      render: (t) => <span className="text-gray-500">{t.specialty || '—'}</span>,
     },
     {
       key: 'email',
       label: 'Email',
       render: (t) =>
         t.email ? (
-          <span className="text-white/60 text-xs flex items-center gap-1.5">
+          <span className="text-gray-500 text-xs flex items-center gap-1.5">
             <Mail size={12} /> {t.email}
           </span>
         ) : (
-          <span className="text-white/30">—</span>
+          <span className="text-gray-300">—</span>
         ),
     },
     {
@@ -169,17 +169,17 @@ export function TeachersPage() {
       label: 'Telefone',
       render: (t) =>
         t.phone ? (
-          <span className="text-white/60 text-xs flex items-center gap-1.5">
+          <span className="text-gray-500 text-xs flex items-center gap-1.5">
             <Phone size={12} /> {t.phone}
           </span>
         ) : (
-          <span className="text-white/30">—</span>
+          <span className="text-gray-300">—</span>
         ),
     },
     {
       key: 'classes',
       label: 'Turmas',
-      render: (t) => <span className="text-white/60">{t.classCount || 0}</span>,
+      render: (t) => <span className="text-gray-500">{t.classCount || 0}</span>,
     },
     {
       key: 'status',
@@ -208,7 +208,7 @@ export function TeachersPage() {
       <Card className="mb-4">
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1">
-            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" />
+            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-300" />
             <input
               type="text"
               value={search}
@@ -264,14 +264,14 @@ export function TeachersPage() {
                     setEditingTeacher(t);
                     setModalOpen(true);
                   }}
-                  className="p-1.5 rounded-md text-white/40 hover:text-white hover:bg-white/[0.06] transition-all"
+                  className="p-1.5 rounded-md text-gray-400 hover:text-gray-900 hover:bg-gray-100 transition-all"
                   title="Editar"
                 >
                   <Pencil size={16} />
                 </button>
                 <button
                   onClick={() => handleDelete(t)}
-                  className="p-1.5 rounded-md text-white/40 hover:text-red-400 hover:bg-red-500/10 transition-all"
+                  className="p-1.5 rounded-md text-gray-400 hover:text-red-600 hover:bg-red-500/10 transition-all"
                   title="Excluir"
                 >
                   <Trash2 size={16} />
@@ -403,7 +403,7 @@ function TeacherFormModal({
     >
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
-          <h3 className="text-sm font-semibold text-white/80 uppercase tracking-wide mb-3">
+          <h3 className="text-sm font-semibold text-gray-700 uppercase tracking-wide mb-3">
             Dados Pessoais
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -464,7 +464,7 @@ function TeacherFormModal({
         </div>
 
         <div>
-          <h3 className="text-sm font-semibold text-white/80 uppercase tracking-wide mb-3">
+          <h3 className="text-sm font-semibold text-gray-700 uppercase tracking-wide mb-3">
             Vínculo e Situação
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -528,13 +528,13 @@ function TeacherFormModal({
                 {(formData.availabilityList || []).map((item, i) => (
                   <span
                     key={i}
-                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white/[0.04] border border-edge text-xs text-white/70"
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-gray-100 border border-edge text-xs text-gray-600"
                   >
                     {item}
                     <button
                       type="button"
                       onClick={() => removeAvailability(item)}
-                      className="text-white/30 hover:text-red-400"
+                      className="text-gray-300 hover:text-red-600"
                     >
                       <X size={12} />
                     </button>

@@ -165,13 +165,13 @@ export function SchedulesPage() {
     {
       key: 'weekday',
       label: 'Dia',
-      render: (s) => <span className="text-white/90 font-medium">{weekdayLabel(s.weekday)}</span>,
+      render: (s) => <span className="text-gray-800 font-medium">{weekdayLabel(s.weekday)}</span>,
     },
     {
       key: 'time',
       label: 'Horário',
       render: (s) => (
-        <span className="text-white/60 text-xs flex items-center gap-1.5">
+        <span className="text-gray-500 text-xs flex items-center gap-1.5">
           <Clock size={12} /> {s.start_time} — {s.end_time}
         </span>
       ),
@@ -179,17 +179,17 @@ export function SchedulesPage() {
     {
       key: 'class',
       label: 'Turma',
-      render: (s) => <span className="text-white/70">{s.class?.name || '—'}</span>,
+      render: (s) => <span className="text-gray-600">{s.class?.name || '—'}</span>,
     },
     {
       key: 'teacher',
       label: 'Professor',
-      render: (s) => <span className="text-white/60">{teacherName(s)}</span>,
+      render: (s) => <span className="text-gray-500">{teacherName(s)}</span>,
     },
     {
       key: 'room',
       label: 'Sala',
-      render: (s) => <span className="text-white/50 text-xs">{s.room?.name || '—'}</span>,
+      render: (s) => <span className="text-gray-400 text-xs">{s.room?.name || '—'}</span>,
     },
     {
       key: 'status',
@@ -216,32 +216,32 @@ export function SchedulesPage() {
           {weekdayGroups.map((g) => (
             <Card key={g.value}>
               <div className="flex items-center justify-between mb-3">
-                <h3 className="text-sm font-semibold text-white/90">{g.label}</h3>
+                <h3 className="text-sm font-semibold text-gray-800">{g.label}</h3>
                 <Badge variant="neutral">{g.entries.length}</Badge>
               </div>
               {g.entries.length === 0 ? (
-                <p className="text-xs text-white/30 py-6 text-center">Nenhuma aula</p>
+                <p className="text-xs text-gray-300 py-6 text-center">Nenhuma aula</p>
               ) : (
                 <div className="space-y-2">
                   {g.entries.map((s) => (
                     <div
                       key={s.id}
-                      className="p-2.5 rounded-lg bg-white/[0.02] border border-edge/subtle hover:border-edge transition-colors"
+                      className="p-2.5 rounded-lg bg-gray-50 border border-edge/subtle hover:border-edge transition-colors"
                     >
                       <div className="flex items-center justify-between mb-1">
-                        <span className="text-xs font-medium text-white/80">
+                        <span className="text-xs font-medium text-gray-700">
                           {s.start_time} — {s.end_time}
                         </span>
                         <button
                           onClick={() => handleDelete(s)}
-                          className="p-0.5 text-white/20 hover:text-red-400 transition-colors"
+                          className="p-0.5 text-gray-300 hover:text-red-600 transition-colors"
                           title="Excluir"
                         >
                           <Trash2 size={12} />
                         </button>
                       </div>
-                      <p className="text-sm text-white/70">{s.class?.name || '—'}</p>
-                      <p className="text-xs text-white/40 mt-0.5">
+                      <p className="text-sm text-gray-600">{s.class?.name || '—'}</p>
+                      <p className="text-xs text-gray-400 mt-0.5">
                         {teacherName(s)} · {s.room?.name || 'Sem sala'}
                       </p>
                     </div>
@@ -269,14 +269,14 @@ export function SchedulesPage() {
                   setEditingSchedule(s);
                   setModalOpen(true);
                 }}
-                className="p-1.5 rounded-md text-white/40 hover:text-white hover:bg-white/[0.06] transition-all"
+                className="p-1.5 rounded-md text-gray-400 hover:text-gray-900 hover:bg-gray-100 transition-all"
                 title="Editar"
               >
                 <Pencil size={16} />
               </button>
               <button
                 onClick={() => handleDelete(s)}
-                className="p-1.5 rounded-md text-white/40 hover:text-red-400 hover:bg-red-500/10 transition-all"
+                className="p-1.5 rounded-md text-gray-400 hover:text-red-600 hover:bg-red-500/10 transition-all"
                 title="Excluir"
               >
                 <Trash2 size={16} />
@@ -525,8 +525,8 @@ function ScheduleFormModal({
         </FormField>
 
         <div className="p-3 rounded-lg bg-yellow-500/5 border border-yellow-500/10 flex items-start gap-2.5">
-          <AlertTriangle size={16} className="text-yellow-400 shrink-0 mt-0.5" />
-          <p className="text-xs text-white/50">
+          <AlertTriangle size={16} className="text-yellow-600 shrink-0 mt-0.5" />
+          <p className="text-xs text-gray-400">
             O sistema verifica automaticamente conflitos de professor e sala no mesmo dia e horário.
             Você será alertado antes de salvar se houver sobreposição.
           </p>

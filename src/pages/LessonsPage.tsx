@@ -124,8 +124,8 @@ export function LessonsPage() {
       label: 'Título',
       render: (l) => (
         <div>
-          <span className="text-white/90 font-medium">{l.title}</span>
-          {l.objective && <p className="text-xs text-white/40 mt-0.5 line-clamp-1">{l.objective}</p>}
+          <span className="text-gray-800 font-medium">{l.title}</span>
+          {l.objective && <p className="text-xs text-gray-400 mt-0.5 line-clamp-1">{l.objective}</p>}
         </div>
       ),
     },
@@ -133,7 +133,7 @@ export function LessonsPage() {
       key: 'lesson_date',
       label: 'Data',
       render: (l) => (
-        <span className="text-white/60 text-xs flex items-center gap-1.5">
+        <span className="text-gray-500 text-xs flex items-center gap-1.5">
           <Calendar size={12} />
           {new Date(l.lesson_date).toLocaleDateString('pt-BR')}
         </span>
@@ -143,7 +143,7 @@ export function LessonsPage() {
       key: 'time',
       label: 'Horário',
       render: (l) => (
-        <span className="text-white/60 text-xs flex items-center gap-1.5">
+        <span className="text-gray-500 text-xs flex items-center gap-1.5">
           <Clock size={12} /> {l.start_time} — {l.end_time}
         </span>
       ),
@@ -151,12 +151,12 @@ export function LessonsPage() {
     {
       key: 'class',
       label: 'Turma',
-      render: (l) => <span className="text-white/60">{l.class?.name || '—'}</span>,
+      render: (l) => <span className="text-gray-500">{l.class?.name || '—'}</span>,
     },
     {
       key: 'teacher',
       label: 'Professor',
-      render: (l) => <span className="text-white/50 text-xs">{teacherName(l)}</span>,
+      render: (l) => <span className="text-gray-400 text-xs">{teacherName(l)}</span>,
     },
     {
       key: 'status',
@@ -184,14 +184,14 @@ export function LessonsPage() {
                 setEditingLesson(l);
                 setModalOpen(true);
               }}
-              className="p-1.5 rounded-md text-white/40 hover:text-white hover:bg-white/[0.06] transition-all"
+              className="p-1.5 rounded-md text-gray-400 hover:text-gray-900 hover:bg-gray-100 transition-all"
               title="Editar"
             >
               <Pencil size={16} />
             </button>
             <button
               onClick={() => handleDelete(l)}
-              className="p-1.5 rounded-md text-white/40 hover:text-red-400 hover:bg-red-500/10 transition-all"
+              className="p-1.5 rounded-md text-gray-400 hover:text-red-600 hover:bg-red-500/10 transition-all"
               title="Excluir"
             >
               <Trash2 size={16} />
@@ -242,7 +242,7 @@ export function LessonsPage() {
       <Card className="mb-4">
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1">
-            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" />
+            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-300" />
             <input
               type="text"
               value={search}

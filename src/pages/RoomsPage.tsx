@@ -104,23 +104,23 @@ export function RoomsPage() {
       label: 'Sala',
       render: (r) => (
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-white/[0.04] border border-edge flex items-center justify-center text-white/50 shrink-0">
+          <div className="w-8 h-8 rounded-lg bg-gray-100 border border-edge flex items-center justify-center text-gray-400 shrink-0">
             <DoorOpen size={16} />
           </div>
-          <span className="text-white/90 font-medium">{r.name}</span>
+          <span className="text-gray-800 font-medium">{r.name}</span>
         </div>
       ),
     },
     {
       key: 'code',
       label: 'Código',
-      render: (r) => <span className="text-xs text-white/40 font-mono">{r.code || '—'}</span>,
+      render: (r) => <span className="text-xs text-gray-400 font-mono">{r.code || '—'}</span>,
     },
     {
       key: 'capacity',
       label: 'Capacidade',
       render: (r) => (
-        <span className="text-white/60 flex items-center gap-1.5">
+        <span className="text-gray-500 flex items-center gap-1.5">
           <Users size={14} /> {r.capacity}
         </span>
       ),
@@ -130,11 +130,11 @@ export function RoomsPage() {
       label: 'Unidade',
       render: (r) =>
         r.unit ? (
-          <span className="text-white/50 text-xs flex items-center gap-1.5">
+          <span className="text-gray-400 text-xs flex items-center gap-1.5">
             <MapPin size={12} /> {r.unit.name}
           </span>
         ) : (
-          <span className="text-white/30">—</span>
+          <span className="text-gray-300">—</span>
         ),
     },
     {
@@ -164,7 +164,7 @@ export function RoomsPage() {
       <Card className="mb-4">
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1">
-            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" />
+            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-300" />
             <input
               type="text"
               value={search}
@@ -220,14 +220,14 @@ export function RoomsPage() {
                     setEditingRoom(r);
                     setModalOpen(true);
                   }}
-                  className="p-1.5 rounded-md text-white/40 hover:text-white hover:bg-white/[0.06] transition-all"
+                  className="p-1.5 rounded-md text-gray-400 hover:text-gray-900 hover:bg-gray-100 transition-all"
                   title="Editar"
                 >
                   <Pencil size={16} />
                 </button>
                 <button
                   onClick={() => handleDelete(r)}
-                  className="p-1.5 rounded-md text-white/40 hover:text-red-400 hover:bg-red-500/10 transition-all"
+                  className="p-1.5 rounded-md text-gray-400 hover:text-red-600 hover:bg-red-500/10 transition-all"
                   title="Excluir"
                 >
                   <Trash2 size={16} />

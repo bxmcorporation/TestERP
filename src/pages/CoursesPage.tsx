@@ -103,30 +103,30 @@ export function CoursesPage() {
       label: 'Nome',
       render: (c) => (
         <div>
-          <span className="text-white/90 font-medium">{c.name}</span>
-          {c.description && <p className="text-xs text-white/40 mt-0.5 line-clamp-1">{c.description}</p>}
+          <span className="text-gray-800 font-medium">{c.name}</span>
+          {c.description && <p className="text-xs text-gray-400 mt-0.5 line-clamp-1">{c.description}</p>}
         </div>
       ),
     },
     {
       key: 'duration',
       label: 'Duracao',
-      render: (c) => <span className="text-white/60">{c.duration_hours ? `${c.duration_hours}h` : '—'}</span>,
+      render: (c) => <span className="text-gray-500">{c.duration_hours ? `${c.duration_hours}h` : '—'}</span>,
     },
     {
       key: 'modality',
       label: 'Modalidade',
-      render: (c) => <span className="text-white/60 capitalize">{c.modality}</span>,
+      render: (c) => <span className="text-gray-500 capitalize">{c.modality}</span>,
     },
     {
       key: 'classes',
       label: 'Turmas',
-      render: (c) => <span className="text-white/60">{c.classCount || 0}</span>,
+      render: (c) => <span className="text-gray-500">{c.classCount || 0}</span>,
     },
     {
       key: 'unit',
       label: 'Unidade',
-      render: (c) => <span className="text-white/50 text-xs">{c.unit?.name || '—'}</span>,
+      render: (c) => <span className="text-gray-400 text-xs">{c.unit?.name || '—'}</span>,
     },
     { key: 'status', label: 'Situacao', render: (c) => <StatusBadge status={c.status} /> },
   ];
@@ -152,8 +152,8 @@ export function CoursesPage() {
             rowKey={(c) => c.id}
             actions={(c) => (
               <div className="flex items-center justify-end gap-1">
-                <button onClick={() => { setEditingCourse(c); setModalOpen(true); }} className="p-1.5 rounded-md text-white/40 hover:text-white hover:bg-white/[0.06] transition-all" title="Editar"><Pencil size={16} /></button>
-                <button onClick={() => handleDelete(c)} className="p-1.5 rounded-md text-white/40 hover:text-red-400 hover:bg-red-500/10 transition-all" title="Excluir"><Trash2 size={16} /></button>
+                <button onClick={() => { setEditingCourse(c); setModalOpen(true); }} className="p-1.5 rounded-md text-gray-400 hover:text-gray-900 hover:bg-gray-100 transition-all" title="Editar"><Pencil size={16} /></button>
+                <button onClick={() => handleDelete(c)} className="p-1.5 rounded-md text-gray-400 hover:text-red-600 hover:bg-red-500/10 transition-all" title="Excluir"><Trash2 size={16} /></button>
               </div>
             )}
           />
@@ -365,12 +365,12 @@ export function ClassesPage() {
       label: 'Turma',
       render: (c) => (
         <div>
-          <span className="text-white/90 font-medium">{c.name}</span>
-          <p className="text-xs text-white/40 font-mono">{c.code}</p>
+          <span className="text-gray-800 font-medium">{c.name}</span>
+          <p className="text-xs text-gray-400 font-mono">{c.code}</p>
         </div>
       ),
     },
-    { key: 'course', label: 'Curso', render: (c) => <span className="text-white/60">{c.course?.name || '—'}</span> },
+    { key: 'course', label: 'Curso', render: (c) => <span className="text-gray-500">{c.course?.name || '—'}</span> },
     {
       key: 'occupancy',
       label: 'Ocupacao',
@@ -379,17 +379,17 @@ export function ClassesPage() {
         return (
           <div className="min-w-[100px]">
             <div className="flex items-center justify-between text-xs mb-1">
-              <span className="text-white/60">{c.occupied || 0}/{c.max_capacity}</span>
-              {pct >= 100 && <span className="text-red-400">Lotada</span>}
+              <span className="text-gray-500">{c.occupied || 0}/{c.max_capacity}</span>
+              {pct >= 100 && <span className="text-red-600">Lotada</span>}
             </div>
-            <div className="h-1.5 rounded-full bg-white/[0.06] overflow-hidden">
+            <div className="h-1.5 rounded-full bg-gray-100 overflow-hidden">
               <div className={`h-full rounded-full ${pct >= 100 ? 'bg-red-500' : pct >= 60 ? 'bg-green-500' : 'bg-rayon-orange'}`} style={{ width: `${Math.min(pct, 100)}%` }} />
             </div>
           </div>
         );
       },
     },
-    { key: 'room', label: 'Sala', render: (c) => <span className="text-white/50 text-xs">{c.room?.name || '—'}</span> },
+    { key: 'room', label: 'Sala', render: (c) => <span className="text-gray-400 text-xs">{c.room?.name || '—'}</span> },
     { key: 'status', label: 'Situacao', render: (c) => <StatusBadge status={c.status} /> },
   ];
 
@@ -409,8 +409,8 @@ export function ClassesPage() {
               <Users size={22} />
             </div>
             <div className="flex-1">
-              <h3 className="text-sm font-semibold text-white">Turmas em Formacao</h3>
-              <p className="text-xs text-white/50 mt-0.5">
+              <h3 className="text-sm font-semibold text-gray-900">Turmas em Formacao</h3>
+              <p className="text-xs text-gray-400 mt-0.5">
                 {classes.filter((c) => c.status === 'em_formacao').length} turma(s) aguardando confirmacao
               </p>
             </div>
@@ -450,7 +450,7 @@ export function ClassesPage() {
                 <select value={c.status} onChange={(ev) => handleStatusChange(c, ev.target.value)} className="input-base text-xs py-1" onClick={(ev) => ev.stopPropagation()}>
                   {CLASS_STATUS_OPTIONS.map((s) => <option key={s.value} value={s.value}>{s.label}</option>)}
                 </select>
-                <button onClick={() => { setEditingClass(c); setModalOpen(true); }} className="p-1.5 rounded-md text-white/40 hover:text-white hover:bg-white/[0.06] transition-all" title="Editar"><Pencil size={16} /></button>
+                <button onClick={() => { setEditingClass(c); setModalOpen(true); }} className="p-1.5 rounded-md text-gray-400 hover:text-gray-900 hover:bg-gray-100 transition-all" title="Editar"><Pencil size={16} /></button>
               </div>
             )}
           />
@@ -588,7 +588,7 @@ function ClassFormModal({
         </FormField>
 
         <div>
-          <label className="block text-xs font-medium text-white/50 mb-2">Professores</label>
+          <label className="block text-xs font-medium text-gray-400 mb-2">Professores</label>
           <div className="flex flex-wrap gap-2">
             {teachers.map((t) => {
               const selected = formData.teacher_ids?.includes(t.id);
@@ -598,14 +598,14 @@ function ClassFormModal({
                   type="button"
                   onClick={() => toggleTeacher(t.id)}
                   className={`px-3 py-1.5 rounded-lg text-sm transition-all ${
-                    selected ? 'bg-rayon-orange/10 text-rayon-orange border border-rayon-orange/30' : 'bg-white/[0.04] text-white/50 border border-edge hover:bg-white/[0.06]'
+                    selected ? 'bg-rayon-orange/10 text-rayon-orange border border-rayon-orange/30' : 'bg-gray-100 text-gray-400 border border-edge hover:bg-gray-100'
                   }`}
                 >
                   {t.first_name} {t.last_name}
                 </button>
               );
             })}
-            {teachers.length === 0 && <p className="text-xs text-white/30">Nenhum professor cadastrado</p>}
+            {teachers.length === 0 && <p className="text-xs text-gray-300">Nenhum professor cadastrado</p>}
           </div>
         </div>
 
@@ -732,39 +732,39 @@ function FormationModal({
       ) : (
         <div className="space-y-5">
           {/* Capacity bar */}
-          <div className="p-4 rounded-lg bg-white/[0.02] border border-edge">
+          <div className="p-4 rounded-lg bg-gray-50 border border-edge">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-sm text-white/80">Ocupacao</span>
-              <span className="text-sm text-white/60">{enrolledStudents.length} / {cls.max_capacity}</span>
+              <span className="text-sm text-gray-700">Ocupacao</span>
+              <span className="text-sm text-gray-500">{enrolledStudents.length} / {cls.max_capacity}</span>
             </div>
-            <div className="h-2.5 rounded-full bg-white/[0.06] overflow-hidden mb-2">
+            <div className="h-2.5 rounded-full bg-gray-100 overflow-hidden mb-2">
               <div className={`h-full rounded-full transition-all ${pct >= 100 ? 'bg-red-500' : 'bg-rayon-orange'}`} style={{ width: `${Math.min(pct, 100)}%` }} />
             </div>
             <div className="flex items-center justify-between text-xs">
-              <span className={canConfirm ? 'text-green-400' : 'text-white/40'}>
+              <span className={canConfirm ? 'text-green-600' : 'text-gray-400'}>
                 {canConfirm ? 'Minimo atingido — pronto para confirmar' : `Faltam ${cls.min_capacity - enrolledStudents.length} aluno(s) para o minimo`}
               </span>
-              <span className="text-white/30">Min: {cls.min_capacity} · Max: {cls.max_capacity}</span>
+              <span className="text-gray-300">Min: {cls.min_capacity} · Max: {cls.max_capacity}</span>
             </div>
           </div>
 
           {/* Enrolled students */}
           <div>
-            <h3 className="text-sm font-semibold text-white/80 mb-2">Alunos Matriculados ({enrolledStudents.length})</h3>
+            <h3 className="text-sm font-semibold text-gray-700 mb-2">Alunos Matriculados ({enrolledStudents.length})</h3>
             {enrolledStudents.length === 0 ? (
-              <p className="text-sm text-white/30 py-4 text-center bg-white/[0.02] rounded-lg">Nenhum aluno matriculado ainda</p>
+              <p className="text-sm text-gray-300 py-4 text-center bg-gray-50 rounded-lg">Nenhum aluno matriculado ainda</p>
             ) : (
               <div className="space-y-1.5">
                 {enrolledStudents.map((s) => (
                   <div key={s.id} className="flex items-center justify-between p-2.5 rounded-lg bg-green-500/5 border border-green-500/10">
                     <div className="flex items-center gap-3">
-                      <div className="w-7 h-7 rounded-full bg-green-500/10 border border-green-500/20 flex items-center justify-center text-xs text-green-400 font-medium">
+                      <div className="w-7 h-7 rounded-full bg-green-500/10 border border-green-500/20 flex items-center justify-center text-xs text-green-600 font-medium">
                         {s.first_name.charAt(0)}{s.last_name.charAt(0)}
                       </div>
-                      <span className="text-sm text-white/90">{s.first_name} {s.last_name}</span>
-                      <span className="text-xs text-white/30 font-mono">{s.code}</span>
+                      <span className="text-sm text-gray-800">{s.first_name} {s.last_name}</span>
+                      <span className="text-xs text-gray-300 font-mono">{s.code}</span>
                     </div>
-                    <button onClick={() => removeStudent(s.id)} className="text-xs text-red-400/70 hover:text-red-400">Remover</button>
+                    <button onClick={() => removeStudent(s.id)} className="text-xs text-red-600/70 hover:text-red-600">Remover</button>
                   </div>
                 ))}
               </div>
@@ -773,19 +773,19 @@ function FormationModal({
 
           {/* Waiting students */}
           <div>
-            <h3 className="text-sm font-semibold text-white/80 mb-2">Alunos Aguardando Turma ({waitingStudents.length})</h3>
+            <h3 className="text-sm font-semibold text-gray-700 mb-2">Alunos Aguardando Turma ({waitingStudents.length})</h3>
             {waitingStudents.length === 0 ? (
-              <p className="text-sm text-white/30 py-4 text-center bg-white/[0.02] rounded-lg">Nenhum aluno aguardando para este curso</p>
+              <p className="text-sm text-gray-300 py-4 text-center bg-gray-50 rounded-lg">Nenhum aluno aguardando para este curso</p>
             ) : (
               <div className="space-y-1.5">
                 {waitingStudents.map((s) => (
                   <div key={s.id} className="flex items-center justify-between p-2.5 rounded-lg bg-yellow-500/5 border border-yellow-500/10">
                     <div className="flex items-center gap-3">
-                      <div className="w-7 h-7 rounded-full bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center text-xs text-yellow-400 font-medium">
+                      <div className="w-7 h-7 rounded-full bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center text-xs text-yellow-600 font-medium">
                         {s.first_name.charAt(0)}{s.last_name.charAt(0)}
                       </div>
-                      <span className="text-sm text-white/90">{s.first_name} {s.last_name}</span>
-                      <span className="text-xs text-white/30 font-mono">{s.code}</span>
+                      <span className="text-sm text-gray-800">{s.first_name} {s.last_name}</span>
+                      <span className="text-xs text-gray-300 font-mono">{s.code}</span>
                     </div>
                     <button
                       onClick={() => assignStudent(s.id)}
@@ -802,7 +802,7 @@ function FormationModal({
 
           {/* Actions */}
           <div className="flex items-center justify-between pt-3 border-t border-edge">
-            <p className="text-xs text-white/40">
+            <p className="text-xs text-gray-400">
               {canConfirm
                 ? 'A turma pode ser confirmada pela coordenacao'
                 : 'A coordenacao deve confirmar a abertura manualmente'}

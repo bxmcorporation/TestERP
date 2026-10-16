@@ -36,7 +36,7 @@ export function Modal({ open, onClose, title, description, children, size = 'md'
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-fade-in">
       <div
-        className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/40 backdrop-blur-sm"
         onClick={onClose}
       />
       <div
@@ -45,14 +45,14 @@ export function Modal({ open, onClose, title, description, children, size = 'md'
       >
         <div className="sticky top-0 z-10 flex items-start justify-between gap-4 px-6 py-4 border-b border-edge bg-surface-card/95 backdrop-blur-md">
           <div>
-            <h2 className="text-lg font-display font-bold text-white">{title}</h2>
+            <h2 className="text-lg font-display font-bold text-gray-900">{title}</h2>
             {description && (
-              <p className="text-sm text-white/50 mt-0.5">{description}</p>
+              <p className="text-sm text-gray-400 mt-0.5">{description}</p>
             )}
           </div>
           <button
             onClick={onClose}
-            className="shrink-0 p-1.5 rounded-lg text-white/40 hover:text-white hover:bg-white/[0.06] transition-all"
+            className="shrink-0 p-1.5 rounded-lg text-gray-400 hover:text-gray-900 hover:bg-gray-100 transition-all"
           >
             <X size={18} />
           </button>

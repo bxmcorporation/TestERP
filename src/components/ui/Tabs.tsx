@@ -16,7 +16,7 @@ export function Tabs({ tabs, activeKey, onChange }: { tabs: Tab[]; activeKey: st
             key={tab.key}
             onClick={() => onChange(tab.key)}
             className={`flex items-center gap-2 px-4 py-2.5 text-sm font-medium transition-all relative whitespace-nowrap
-              ${activeKey === tab.key ? 'text-white' : 'text-white/40 hover:text-white/70'}`}
+              ${activeKey === tab.key ? 'text-gray-900' : 'text-gray-400 hover:text-gray-600'}`}
           >
             {tab.icon}
             {tab.label}

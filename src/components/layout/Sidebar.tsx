@@ -95,12 +95,12 @@ export function Sidebar({ currentPath, onNavigate, mobileOpen, onMobileClose }: 
     <>
       {mobileOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden"
+          className="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm lg:hidden"
           onClick={onMobileClose}
         />
       )}
       <aside
-        className={`fixed top-0 left-0 z-50 h-full w-sidebar bg-surface-raised border-r border-edge
+        className={`fixed top-0 left-0 z-50 h-full w-sidebar bg-surface-raised border-r border-edge shadow-xl
         flex flex-col transition-transform duration-300 lg:translate-x-0
         ${mobileOpen ? 'translate-x-0' : '-translate-x-full'}`}
       >
@@ -113,12 +113,12 @@ export function Sidebar({ currentPath, onNavigate, mobileOpen, onMobileClose }: 
             </svg>
           </div>
           <div className="flex-1">
-            <h1 className="text-sm font-display font-bold text-white tracking-wide">RAYON OS</h1>
-            <p className="text-[10px] text-white/30 font-body">Gestao Educacional</p>
+            <h1 className="text-sm font-display font-bold text-gray-900 tracking-wide">RAYON OS</h1>
+            <p className="text-[10px] text-gray-300 font-body">Gestao Educacional</p>
           </div>
           <button
             onClick={onMobileClose}
-            className="lg:hidden p-1.5 rounded-md text-white/40 hover:text-white hover:bg-white/[0.06]"
+            className="lg:hidden p-1.5 rounded-md text-gray-400 hover:text-gray-900 hover:bg-gray-100"
           >
             <X size={18} />
           </button>
@@ -135,7 +135,7 @@ export function Sidebar({ currentPath, onNavigate, mobileOpen, onMobileClose }: 
                 <button
                   onClick={() => toggleSection(section.key)}
                   className={`flex items-center justify-between w-full px-3 py-2 text-xs font-semibold uppercase tracking-wider
-                    ${hasActive ? 'text-white/60' : 'text-white/30'} hover:text-white/50 transition-colors`}
+                    ${hasActive ? 'text-gray-600' : 'text-gray-400'} hover:text-gray-500 transition-colors`}
                 >
                   {section.label}
                   <ChevronDown
@@ -153,11 +153,11 @@ export function Sidebar({ currentPath, onNavigate, mobileOpen, onMobileClose }: 
                           onClick={() => handleNavigate(item.path)}
                           className={`flex items-center gap-3 w-full px-3 py-2 rounded-lg text-sm transition-all duration-150
                             ${active
-                              ? 'bg-rayon-orange/10 text-white border border-rayon-orange/20'
-                              : 'text-white/50 hover:text-white/80 hover:bg-white/[0.03] border border-transparent'
+                              ? 'bg-rayon-orange/10 text-gray-900 border border-rayon-orange/20'
+                              : 'text-gray-400 hover:text-gray-700 hover:bg-gray-100 border border-transparent'
                             }`}
                         >
-                          <span className={active ? 'text-rayon-orange' : 'text-white/40'}>
+                          <span className={active ? 'text-rayon-orange' : 'text-gray-400'}>
                             {item.icon}
                           </span>
                           {item.label}
@@ -174,13 +174,13 @@ export function Sidebar({ currentPath, onNavigate, mobileOpen, onMobileClose }: 
 
         {/* Footer */}
         <div className="border-t border-edge p-3 shrink-0">
-          <div className="flex items-center gap-3 px-3 py-2 rounded-lg bg-white/[0.02] border border-edge">
+          <div className="flex items-center gap-3 px-3 py-2 rounded-lg bg-gray-50 border border-edge">
             <div className="w-8 h-8 rounded-full bg-rayon-orange/20 border border-rayon-orange/30 flex items-center justify-center shrink-0">
               <ShieldCheck size={16} className="text-rayon-orange" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-xs font-medium text-white/80 truncate">Administrador</p>
-              <p className="text-[10px] text-white/30 truncate">Ambiente de Demonstracao</p>
+              <p className="text-xs font-medium text-gray-700 truncate">Administrador</p>
+              <p className="text-[10px] text-gray-300 truncate">Ambiente de Demonstracao</p>
             </div>
           </div>
         </div>
@@ -201,14 +201,14 @@ export function Topbar({ onMenuClick, onSearch }: TopbarProps) {
     <header className="sticky top-0 z-30 h-topbar bg-surface-base/80 backdrop-blur-xl border-b border-edge flex items-center gap-4 px-4 lg:px-6">
       <button
         onClick={onMenuClick}
-        className="lg:hidden p-2 rounded-lg text-white/60 hover:text-white hover:bg-white/[0.06]"
+        className="lg:hidden p-2 rounded-lg text-gray-500 hover:text-gray-900 hover:bg-gray-100"
       >
         <Menu size={20} />
       </button>
 
       <div className="flex-1 max-w-md">
         <div className="relative">
-          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" />
+          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-300" />
           <input
             type="text"
             value={searchValue}
@@ -223,13 +223,13 @@ export function Topbar({ onMenuClick, onSearch }: TopbarProps) {
       </div>
 
       <div className="flex items-center gap-2">
-        <button className="relative p-2 rounded-lg text-white/50 hover:text-white hover:bg-white/[0.06] transition-all">
+        <button className="relative p-2 rounded-lg text-gray-400 hover:text-gray-900 hover:bg-gray-100 transition-all">
           <Bell size={18} />
           <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-rayon-orange" />
         </button>
-        <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/[0.03] border border-edge">
-          <FileText size={14} className="text-white/40" />
-          <span className="text-xs text-white/50">Demonstracao</span>
+        <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gray-100 border border-edge">
+          <FileText size={14} className="text-gray-400" />
+          <span className="text-xs text-gray-400">Demonstracao</span>
         </div>
       </div>
     </header>

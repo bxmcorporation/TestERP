@@ -110,23 +110,23 @@ export function EnrollmentsPage({ initialSearch }: { initialSearch?: string }) {
   };
 
   const columns: Column<EnrollmentWithRelations>[] = [
-    { key: 'code', label: 'Codigo', render: (e) => <span className="text-xs text-white/40 font-mono">{e.code}</span> },
+    { key: 'code', label: 'Codigo', render: (e) => <span className="text-xs text-gray-400 font-mono">{e.code}</span> },
     {
       key: 'student',
       label: 'Aluno',
       render: (e) => e.student ? (
-        <span className="text-white/90 font-medium">{e.student.first_name} {e.student.last_name}</span>
-      ) : <span className="text-white/30">—</span>,
+        <span className="text-gray-800 font-medium">{e.student.first_name} {e.student.last_name}</span>
+      ) : <span className="text-gray-300">—</span>,
     },
     {
       key: 'course',
       label: 'Curso',
-      render: (e) => <span className="text-white/60">{e.course?.name || '—'}</span>,
+      render: (e) => <span className="text-gray-500">{e.course?.name || '—'}</span>,
     },
     {
       key: 'enrollment_date',
       label: 'Data',
-      render: (e) => <span className="text-white/40 text-xs">{new Date(e.enrollment_date).toLocaleDateString('pt-BR')}</span>,
+      render: (e) => <span className="text-gray-400 text-xs">{new Date(e.enrollment_date).toLocaleDateString('pt-BR')}</span>,
     },
     {
       key: 'status',
@@ -149,12 +149,12 @@ export function EnrollmentsPage({ initialSearch }: { initialSearch?: string }) {
       {enrollments.filter((e) => e.status === 'aguardando_turma').length > 0 && (
         <Card className="mb-4 border-yellow-500/15">
           <div className="flex items-center gap-4">
-            <div className="p-3 rounded-xl bg-yellow-500/10 border border-yellow-500/20 text-yellow-400">
+            <div className="p-3 rounded-xl bg-yellow-500/10 border border-yellow-500/20 text-yellow-600">
               <Clock size={22} />
             </div>
             <div className="flex-1">
-              <h3 className="text-sm font-semibold text-white">Alunos Aguardando Turma</h3>
-              <p className="text-xs text-white/50 mt-0.5">
+              <h3 className="text-sm font-semibold text-gray-900">Alunos Aguardando Turma</h3>
+              <p className="text-xs text-gray-400 mt-0.5">
                 {enrollments.filter((e) => e.status === 'aguardando_turma').length} matricula(s) aguardando formacao de turma
               </p>
             </div>
@@ -165,7 +165,7 @@ export function EnrollmentsPage({ initialSearch }: { initialSearch?: string }) {
       <Card className="mb-4">
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1">
-            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" />
+            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-300" />
             <input type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Buscar matricula..." className="input-base w-full pl-9" />
           </div>
           <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} className="input-base sm:w-48">
@@ -204,7 +204,7 @@ export function EnrollmentsPage({ initialSearch }: { initialSearch?: string }) {
                 </select>
                 <button
                   onClick={() => { setEditingEnrollment(e); setModalOpen(true); }}
-                  className="p-1.5 rounded-md text-white/40 hover:text-white hover:bg-white/[0.06] transition-all"
+                  className="p-1.5 rounded-md text-gray-400 hover:text-gray-900 hover:bg-gray-100 transition-all"
                   title="Editar"
                 >
                   <Pencil size={16} />

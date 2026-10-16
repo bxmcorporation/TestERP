@@ -121,10 +121,10 @@ export function GuardiansPage({ initialSearch }: { initialSearch?: string }) {
       label: 'Nome',
       render: (g) => (
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full bg-white/[0.04] border border-edge flex items-center justify-center text-xs font-medium text-white/60">
+          <div className="w-8 h-8 rounded-full bg-gray-100 border border-edge flex items-center justify-center text-xs font-medium text-gray-500">
             {g.first_name.charAt(0)}{g.last_name.charAt(0)}
           </div>
-          <span className="text-white/90 font-medium">{g.first_name} {g.last_name}</span>
+          <span className="text-gray-800 font-medium">{g.first_name} {g.last_name}</span>
         </div>
       ),
     },
@@ -133,9 +133,9 @@ export function GuardiansPage({ initialSearch }: { initialSearch?: string }) {
       label: 'Contato',
       render: (g) => (
         <div className="space-y-0.5">
-          {g.phone && <p className="text-xs text-white/50 flex items-center gap-1"><Phone size={11} /> {g.phone}</p>}
-          {g.email && <p className="text-xs text-white/50 flex items-center gap-1"><Mail size={11} /> {g.email}</p>}
-          {!g.phone && !g.email && <span className="text-white/30">—</span>}
+          {g.phone && <p className="text-xs text-gray-400 flex items-center gap-1"><Phone size={11} /> {g.phone}</p>}
+          {g.email && <p className="text-xs text-gray-400 flex items-center gap-1"><Mail size={11} /> {g.email}</p>}
+          {!g.phone && !g.email && <span className="text-gray-300">—</span>}
         </div>
       ),
     },
@@ -143,7 +143,7 @@ export function GuardiansPage({ initialSearch }: { initialSearch?: string }) {
       key: 'students',
       label: 'Alunos Vinculados',
       render: (g) => (
-        <span className="text-white/60">
+        <span className="text-gray-500">
           {g.student_guardians?.length || 0} aluno(s)
         </span>
       ),
@@ -151,12 +151,12 @@ export function GuardiansPage({ initialSearch }: { initialSearch?: string }) {
     {
       key: 'relationship',
       label: 'Tipo',
-      render: (g) => <span className="text-white/60">{g.relationship_type || '—'}</span>,
+      render: (g) => <span className="text-gray-500">{g.relationship_type || '—'}</span>,
     },
     {
       key: 'financial',
       label: 'Resp. Financeiro',
-      render: (g) => g.is_financial_responsible ? <StatusBadge status="ativo" /> : <span className="text-white/30">Nao</span>,
+      render: (g) => g.is_financial_responsible ? <StatusBadge status="ativo" /> : <span className="text-gray-300">Nao</span>,
     },
     {
       key: 'status',
@@ -177,7 +177,7 @@ export function GuardiansPage({ initialSearch }: { initialSearch?: string }) {
 
       <Card className="mb-4">
         <div className="relative">
-          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" />
+          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-300" />
           <input
             type="text"
             value={search}
@@ -209,21 +209,21 @@ export function GuardiansPage({ initialSearch }: { initialSearch?: string }) {
               <div className="flex items-center justify-end gap-1">
                 <button
                   onClick={() => { setLinkGuardian(g); setLinkModalOpen(true); }}
-                  className="p-1.5 rounded-md text-white/40 hover:text-rayon-orange hover:bg-rayon-orange/10 transition-all"
+                  className="p-1.5 rounded-md text-gray-400 hover:text-rayon-orange hover:bg-rayon-orange/10 transition-all"
                   title="Vincular aluno"
                 >
                   <Link2 size={16} />
                 </button>
                 <button
                   onClick={() => { setEditingGuardian(g); setModalOpen(true); }}
-                  className="p-1.5 rounded-md text-white/40 hover:text-white hover:bg-white/[0.06] transition-all"
+                  className="p-1.5 rounded-md text-gray-400 hover:text-gray-900 hover:bg-gray-100 transition-all"
                   title="Editar"
                 >
                   <Pencil size={16} />
                 </button>
                 <button
                   onClick={() => handleDelete(g)}
-                  className="p-1.5 rounded-md text-white/40 hover:text-red-400 hover:bg-red-500/10 transition-all"
+                  className="p-1.5 rounded-md text-gray-400 hover:text-red-600 hover:bg-red-500/10 transition-all"
                   title="Excluir"
                 >
                   <Trash2 size={16} />
@@ -341,7 +341,7 @@ function GuardianFormModal({
             </select>
           </FormField>
           <div className="flex items-end">
-            <label className="flex items-center gap-2 text-sm text-white/70 cursor-pointer">
+            <label className="flex items-center gap-2 text-sm text-gray-600 cursor-pointer">
               <input
                 type="checkbox"
                 checked={formData.is_financial_responsible || false}
@@ -412,11 +412,11 @@ function LinkStudentModal({
           </select>
         </FormField>
         <div className="flex flex-col gap-2">
-          <label className="flex items-center gap-2 text-sm text-white/70 cursor-pointer">
+          <label className="flex items-center gap-2 text-sm text-gray-600 cursor-pointer">
             <input type="checkbox" checked={isPrimary} onChange={(e) => setIsPrimary(e.target.checked)} className="w-4 h-4 rounded accent-rayon-orange" />
             Responsavel principal
           </label>
-          <label className="flex items-center gap-2 text-sm text-white/70 cursor-pointer">
+          <label className="flex items-center gap-2 text-sm text-gray-600 cursor-pointer">
             <input type="checkbox" checked={isFinancial} onChange={(e) => setIsFinancial(e.target.checked)} className="w-4 h-4 rounded accent-rayon-orange" />
             Responsavel financeiro
           </label>

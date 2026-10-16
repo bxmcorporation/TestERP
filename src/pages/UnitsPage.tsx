@@ -118,12 +118,12 @@ export function UnitsPage() {
       label: 'Unidade',
       render: (u) => (
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 shrink-0">
+          <div className="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-600 shrink-0">
             <Building2 size={16} />
           </div>
           <div>
-            <span className="text-white/90 font-medium">{u.name}</span>
-            <p className="text-xs text-white/40 font-mono">{u.code}</p>
+            <span className="text-gray-800 font-medium">{u.name}</span>
+            <p className="text-xs text-gray-400 font-mono">{u.code}</p>
           </div>
         </div>
       ),
@@ -133,22 +133,22 @@ export function UnitsPage() {
       label: 'Cidade/Estado',
       render: (u) =>
         u.city ? (
-          <span className="text-white/60 text-xs flex items-center gap-1.5">
+          <span className="text-gray-500 text-xs flex items-center gap-1.5">
             <MapPin size={12} /> {u.city}/{u.state || '—'}
           </span>
         ) : (
-          <span className="text-white/30">—</span>
+          <span className="text-gray-300">—</span>
         ),
     },
     {
       key: 'students',
       label: 'Alunos',
-      render: (u) => <span className="text-white/60">{u.studentCount || 0}</span>,
+      render: (u) => <span className="text-gray-500">{u.studentCount || 0}</span>,
     },
     {
       key: 'teachers',
       label: 'Professores',
-      render: (u) => <span className="text-white/60">{u.teacherCount || 0}</span>,
+      render: (u) => <span className="text-gray-500">{u.teacherCount || 0}</span>,
     },
     {
       key: 'status',
@@ -177,7 +177,7 @@ export function UnitsPage() {
       <Card className="mb-4">
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1">
-            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" />
+            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-300" />
             <input
               type="text"
               value={search}
@@ -232,14 +232,14 @@ export function UnitsPage() {
                     setEditingUnit(u);
                     setModalOpen(true);
                   }}
-                  className="p-1.5 rounded-md text-white/40 hover:text-white hover:bg-white/[0.06] transition-all"
+                  className="p-1.5 rounded-md text-gray-400 hover:text-gray-900 hover:bg-gray-100 transition-all"
                   title="Editar"
                 >
                   <Pencil size={16} />
                 </button>
                 <button
                   onClick={() => handleDelete(u)}
-                  className="p-1.5 rounded-md text-white/40 hover:text-red-400 hover:bg-red-500/10 transition-all"
+                  className="p-1.5 rounded-md text-gray-400 hover:text-red-600 hover:bg-red-500/10 transition-all"
                   title="Excluir"
                 >
                   <Trash2 size={16} />

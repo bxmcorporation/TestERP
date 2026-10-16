@@ -127,7 +127,7 @@ export function StudentsPage({ onNavigate, initialSearch }: { onNavigate: (path:
     {
       key: 'code',
       label: 'Codigo',
-      render: (s) => <span className="text-xs text-white/40 font-mono">{s.code}</span>,
+      render: (s) => <span className="text-xs text-gray-400 font-mono">{s.code}</span>,
     },
     {
       key: 'name',
@@ -137,14 +137,14 @@ export function StudentsPage({ onNavigate, initialSearch }: { onNavigate: (path:
           <div className="w-8 h-8 rounded-full bg-rayon-orange/10 border border-rayon-orange/20 flex items-center justify-center text-xs font-medium text-rayon-orange shrink-0">
             {s.first_name.charAt(0)}{s.last_name.charAt(0)}
           </div>
-          <span className="text-white/90 font-medium">{s.first_name} {s.last_name}</span>
+          <span className="text-gray-800 font-medium">{s.first_name} {s.last_name}</span>
         </div>
       ),
     },
     {
       key: 'course',
       label: 'Curso',
-      render: (s) => <span className="text-white/60">{s.course?.name || '—'}</span>,
+      render: (s) => <span className="text-gray-500">{s.course?.name || '—'}</span>,
     },
     {
       key: 'guardian',
@@ -153,14 +153,14 @@ export function StudentsPage({ onNavigate, initialSearch }: { onNavigate: (path:
         const primary = s.student_guardians?.find((sg) => sg.is_primary)?.guardian
           || s.student_guardians?.[0]?.guardian;
         return primary ? (
-          <span className="text-white/60">{primary.first_name} {primary.last_name}</span>
-        ) : <span className="text-white/30">—</span>;
+          <span className="text-gray-500">{primary.first_name} {primary.last_name}</span>
+        ) : <span className="text-gray-300">—</span>;
       },
     },
     {
       key: 'created_at',
       label: 'Cadastro',
-      render: (s) => <span className="text-white/40 text-xs">{new Date(s.created_at).toLocaleDateString('pt-BR')}</span>,
+      render: (s) => <span className="text-gray-400 text-xs">{new Date(s.created_at).toLocaleDateString('pt-BR')}</span>,
     },
     {
       key: 'status',
@@ -186,7 +186,7 @@ export function StudentsPage({ onNavigate, initialSearch }: { onNavigate: (path:
       <Card className="mb-4">
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1">
-            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" />
+            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-300" />
             <input
               type="text"
               value={search}
@@ -234,21 +234,21 @@ export function StudentsPage({ onNavigate, initialSearch }: { onNavigate: (path:
               <div className="flex items-center justify-end gap-1">
                 <button
                   onClick={(e) => { e.stopPropagation(); setSelectedStudentId(s.id); }}
-                  className="p-1.5 rounded-md text-white/40 hover:text-white hover:bg-white/[0.06] transition-all"
+                  className="p-1.5 rounded-md text-gray-400 hover:text-gray-900 hover:bg-gray-100 transition-all"
                   title="Visualizar"
                 >
                   <Eye size={16} />
                 </button>
                 <button
                   onClick={(e) => { e.stopPropagation(); setEditingStudent(s); setModalOpen(true); }}
-                  className="p-1.5 rounded-md text-white/40 hover:text-white hover:bg-white/[0.06] transition-all"
+                  className="p-1.5 rounded-md text-gray-400 hover:text-gray-900 hover:bg-gray-100 transition-all"
                   title="Editar"
                 >
                   <Pencil size={16} />
                 </button>
                 <button
                   onClick={(e) => { e.stopPropagation(); handleDelete(s); }}
-                  className="p-1.5 rounded-md text-white/40 hover:text-red-400 hover:bg-red-500/10 transition-all"
+                  className="p-1.5 rounded-md text-gray-400 hover:text-red-600 hover:bg-red-500/10 transition-all"
                   title="Excluir"
                 >
                   <Trash2 size={16} />
@@ -348,7 +348,7 @@ function StudentFormModal({
     >
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
-          <h3 className="text-sm font-semibold text-white/80 uppercase tracking-wide mb-3">Dados Pessoais</h3>
+          <h3 className="text-sm font-semibold text-gray-700 uppercase tracking-wide mb-3">Dados Pessoais</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <FormField label="Nome" required>
               <input
@@ -409,7 +409,7 @@ function StudentFormModal({
         </div>
 
         <div>
-          <h3 className="text-sm font-semibold text-white/80 uppercase tracking-wide mb-3">Informacoes Academicas</h3>
+          <h3 className="text-sm font-semibold text-gray-700 uppercase tracking-wide mb-3">Informacoes Academicas</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <FormField label="Curso">
               <select
@@ -550,32 +550,32 @@ function StudentProfile({ studentId, onBack, onNavigate }: { studentId: string; 
       content: (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <Card>
-            <h3 className="text-sm font-semibold text-white/80 mb-3">Dados Pessoais</h3>
+            <h3 className="text-sm font-semibold text-gray-700 mb-3">Dados Pessoais</h3>
             <dl className="space-y-2 text-sm">
-              <div className="flex justify-between"><dt className="text-white/40">Codigo</dt><dd className="text-white/80 font-mono">{student.code}</dd></div>
-              <div className="flex justify-between"><dt className="text-white/40">Nome</dt><dd className="text-white/80">{fullName}</dd></div>
-              {age !== null && <div className="flex justify-between"><dt className="text-white/40">Idade</dt><dd className="text-white/80">{age} anos</dd></div>}
-              {student.birth_date && <div className="flex justify-between"><dt className="text-white/40">Nascimento</dt><dd className="text-white/80">{new Date(student.birth_date).toLocaleDateString('pt-BR')}</dd></div>}
-              {student.email && <div className="flex justify-between"><dt className="text-white/40">Email</dt><dd className="text-white/80">{student.email}</dd></div>}
-              {student.phone && <div className="flex justify-between"><dt className="text-white/40">Telefone</dt><dd className="text-white/80">{student.phone}</dd></div>}
-              <div className="flex justify-between"><dt className="text-white/40">Cadastro</dt><dd className="text-white/80">{new Date(student.created_at).toLocaleDateString('pt-BR')}</dd></div>
+              <div className="flex justify-between"><dt className="text-gray-400">Codigo</dt><dd className="text-gray-700 font-mono">{student.code}</dd></div>
+              <div className="flex justify-between"><dt className="text-gray-400">Nome</dt><dd className="text-gray-700">{fullName}</dd></div>
+              {age !== null && <div className="flex justify-between"><dt className="text-gray-400">Idade</dt><dd className="text-gray-700">{age} anos</dd></div>}
+              {student.birth_date && <div className="flex justify-between"><dt className="text-gray-400">Nascimento</dt><dd className="text-gray-700">{new Date(student.birth_date).toLocaleDateString('pt-BR')}</dd></div>}
+              {student.email && <div className="flex justify-between"><dt className="text-gray-400">Email</dt><dd className="text-gray-700">{student.email}</dd></div>}
+              {student.phone && <div className="flex justify-between"><dt className="text-gray-400">Telefone</dt><dd className="text-gray-700">{student.phone}</dd></div>}
+              <div className="flex justify-between"><dt className="text-gray-400">Cadastro</dt><dd className="text-gray-700">{new Date(student.created_at).toLocaleDateString('pt-BR')}</dd></div>
             </dl>
           </Card>
           <Card>
-            <h3 className="text-sm font-semibold text-white/80 mb-3">Situacao Atual</h3>
+            <h3 className="text-sm font-semibold text-gray-700 mb-3">Situacao Atual</h3>
             <dl className="space-y-2 text-sm">
-              <div className="flex justify-between items-center"><dt className="text-white/40">Cadastral</dt><dd><StatusBadge status={student.status} /></dd></div>
-              <div className="flex justify-between items-center"><dt className="text-white/40">Academica</dt><dd><StatusBadge status={student.academic_status} /></dd></div>
-              {student.course && <div className="flex justify-between"><dt className="text-white/40">Curso</dt><dd className="text-white/80">{student.course.name}</dd></div>}
-              {student.unit && <div className="flex justify-between"><dt className="text-white/40">Unidade</dt><dd className="text-white/80">{student.unit.name}</dd></div>}
-              <div className="flex justify-between"><dt className="text-white/40">Matriculas</dt><dd className="text-white/80">{enrollments.length}</dd></div>
-              <div className="flex justify-between"><dt className="text-white/40">Turmas</dt><dd className="text-white/80">{classes.length}</dd></div>
+              <div className="flex justify-between items-center"><dt className="text-gray-400">Cadastral</dt><dd><StatusBadge status={student.status} /></dd></div>
+              <div className="flex justify-between items-center"><dt className="text-gray-400">Academica</dt><dd><StatusBadge status={student.academic_status} /></dd></div>
+              {student.course && <div className="flex justify-between"><dt className="text-gray-400">Curso</dt><dd className="text-gray-700">{student.course.name}</dd></div>}
+              {student.unit && <div className="flex justify-between"><dt className="text-gray-400">Unidade</dt><dd className="text-gray-700">{student.unit.name}</dd></div>}
+              <div className="flex justify-between"><dt className="text-gray-400">Matriculas</dt><dd className="text-gray-700">{enrollments.length}</dd></div>
+              <div className="flex justify-between"><dt className="text-gray-400">Turmas</dt><dd className="text-gray-700">{classes.length}</dd></div>
             </dl>
           </Card>
           {student.notes && (
             <Card className="md:col-span-2">
-              <h3 className="text-sm font-semibold text-white/80 mb-2">Observacoes</h3>
-              <p className="text-sm text-white/60">{student.notes}</p>
+              <h3 className="text-sm font-semibold text-gray-700 mb-2">Observacoes</h3>
+              <p className="text-sm text-gray-500">{student.notes}</p>
             </Card>
           )}
         </div>
@@ -595,20 +595,20 @@ function StudentProfile({ studentId, onBack, onNavigate }: { studentId: string; 
                 <Card key={sg.id}>
                   <div className="flex items-start justify-between mb-2">
                     <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-full bg-white/[0.04] border border-edge flex items-center justify-center text-xs font-medium text-white/60">
+                      <div className="w-9 h-9 rounded-full bg-gray-100 border border-edge flex items-center justify-center text-xs font-medium text-gray-500">
                         {sg.guardian.first_name.charAt(0)}{sg.guardian.last_name.charAt(0)}
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-white/90">{sg.guardian.first_name} {sg.guardian.last_name}</p>
-                        <p className="text-xs text-white/40">{sg.relationship_type}</p>
+                        <p className="text-sm font-medium text-gray-800">{sg.guardian.first_name} {sg.guardian.last_name}</p>
+                        <p className="text-xs text-gray-400">{sg.relationship_type}</p>
                       </div>
                     </div>
                     <div className="flex gap-1">
                       {sg.is_primary && <StatusBadge status="ativo" />}
                     </div>
                   </div>
-                  {sg.guardian.phone && <p className="text-xs text-white/50 flex items-center gap-1.5 mt-2"><Phone size={12} /> {sg.guardian.phone}</p>}
-                  {sg.guardian.email && <p className="text-xs text-white/50 flex items-center gap-1.5"><Mail size={12} /> {sg.guardian.email}</p>}
+                  {sg.guardian.phone && <p className="text-xs text-gray-400 flex items-center gap-1.5 mt-2"><Phone size={12} /> {sg.guardian.phone}</p>}
+                  {sg.guardian.email && <p className="text-xs text-gray-400 flex items-center gap-1.5"><Mail size={12} /> {sg.guardian.email}</p>}
                 </Card>
               ))}
             </div>
@@ -630,8 +630,8 @@ function StudentProfile({ studentId, onBack, onNavigate }: { studentId: string; 
                 <Card key={enr.id}>
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm font-medium text-white/90">{enr.course?.name || 'Curso nao encontrado'}</p>
-                      <p className="text-xs text-white/40 mt-0.5">
+                      <p className="text-sm font-medium text-gray-800">{enr.course?.name || 'Curso nao encontrado'}</p>
+                      <p className="text-xs text-gray-400 mt-0.5">
                         {enr.code} · Matriculado em {new Date(enr.enrollment_date).toLocaleDateString('pt-BR')}
                       </p>
                     </div>
@@ -657,10 +657,10 @@ function StudentProfile({ studentId, onBack, onNavigate }: { studentId: string; 
               {classes.map((cls) => (
                 <Card key={cls.id}>
                   <div className="flex items-center justify-between mb-2">
-                    <p className="text-sm font-medium text-white/90">{cls.name}</p>
+                    <p className="text-sm font-medium text-gray-800">{cls.name}</p>
                     <StatusBadge status={cls.status} />
                   </div>
-                  <p className="text-xs text-white/40">{cls.course?.name}</p>
+                  <p className="text-xs text-gray-400">{cls.course?.name}</p>
                 </Card>
               ))}
             </div>
@@ -676,16 +676,16 @@ function StudentProfile({ studentId, onBack, onNavigate }: { studentId: string; 
         <div>
           <div className="grid grid-cols-3 gap-3 mb-4">
             <Card className="text-center">
-              <p className="text-2xl font-display font-bold text-white">{attendance.length}</p>
-              <p className="text-xs text-white/40 mt-1">Total Registros</p>
+              <p className="text-2xl font-display font-bold text-gray-900">{attendance.length}</p>
+              <p className="text-xs text-gray-400 mt-1">Total Registros</p>
             </Card>
             <Card className="text-center">
-              <p className="text-2xl font-display font-bold text-green-400">{presentCount}</p>
-              <p className="text-xs text-white/40 mt-1">Presencas</p>
+              <p className="text-2xl font-display font-bold text-green-600">{presentCount}</p>
+              <p className="text-xs text-gray-400 mt-1">Presencas</p>
             </Card>
             <Card className="text-center">
               <p className="text-2xl font-display font-bold text-rayon-orange">{attendanceRate}%</p>
-              <p className="text-xs text-white/40 mt-1">Taxa de Presenca</p>
+              <p className="text-xs text-gray-400 mt-1">Taxa de Presenca</p>
             </Card>
           </div>
           {attendance.length === 0 ? (
@@ -696,8 +696,8 @@ function StudentProfile({ studentId, onBack, onNavigate }: { studentId: string; 
                 {attendance.map((att) => (
                   <div key={att.id} className="flex items-center justify-between py-2 border-b border-edge/subtle last:border-0">
                     <div>
-                      <p className="text-sm text-white/80">{att.lesson?.title || 'Aula'}</p>
-                      <p className="text-xs text-white/40">
+                      <p className="text-sm text-gray-700">{att.lesson?.title || 'Aula'}</p>
+                      <p className="text-xs text-gray-400">
                         {att.lesson ? new Date(att.lesson.lesson_date).toLocaleDateString('pt-BR') : ''}
                       </p>
                     </div>
@@ -736,13 +736,13 @@ function StudentProfile({ studentId, onBack, onNavigate }: { studentId: string; 
                 <Card key={item.id}>
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm font-medium text-white/90">{item.description}</p>
-                      <p className="text-xs text-white/40 mt-0.5">
+                      <p className="text-sm font-medium text-gray-800">{item.description}</p>
+                      <p className="text-xs text-gray-400 mt-0.5">
                         {item.code} · Venc: {item.due_date ? new Date(item.due_date).toLocaleDateString('pt-BR') : '—'}
                       </p>
                     </div>
                     <div className="flex items-center gap-3">
-                      <span className="text-sm font-medium text-white/80">
+                      <span className="text-sm font-medium text-gray-700">
                         R$ {item.amount.toFixed(2).replace('.', ',')}
                       </span>
                       <StatusBadge status={item.status} />
@@ -761,21 +761,21 @@ function StudentProfile({ studentId, onBack, onNavigate }: { studentId: string; 
       icon: <FileText size={15} />,
       content: (
         <Card>
-          <h3 className="text-sm font-semibold text-white/80 mb-3">Historico de Atividades</h3>
+          <h3 className="text-sm font-semibold text-gray-700 mb-3">Historico de Atividades</h3>
           <div className="space-y-2 text-sm">
             <div className="flex items-center gap-3 py-2 border-b border-edge/subtle">
-              <div className="p-1.5 rounded-md bg-white/[0.04] text-white/40"><UserPlus size={14} /></div>
+              <div className="p-1.5 rounded-md bg-gray-100 text-gray-400"><UserPlus size={14} /></div>
               <div className="flex-1">
-                <p className="text-white/80">Aluno cadastrado</p>
-                <p className="text-xs text-white/40">{new Date(student.created_at).toLocaleDateString('pt-BR')}</p>
+                <p className="text-gray-700">Aluno cadastrado</p>
+                <p className="text-xs text-gray-400">{new Date(student.created_at).toLocaleDateString('pt-BR')}</p>
               </div>
             </div>
             {student.updated_at !== student.created_at && (
               <div className="flex items-center gap-3 py-2 border-b border-edge/subtle">
-                <div className="p-1.5 rounded-md bg-white/[0.04] text-white/40"><Pencil size={14} /></div>
+                <div className="p-1.5 rounded-md bg-gray-100 text-gray-400"><Pencil size={14} /></div>
                 <div className="flex-1">
-                  <p className="text-white/80">Dados atualizados</p>
-                  <p className="text-xs text-white/40">{new Date(student.updated_at).toLocaleDateString('pt-BR')}</p>
+                  <p className="text-gray-700">Dados atualizados</p>
+                  <p className="text-xs text-gray-400">{new Date(student.updated_at).toLocaleDateString('pt-BR')}</p>
                 </div>
               </div>
             )}
@@ -789,7 +789,7 @@ function StudentProfile({ studentId, onBack, onNavigate }: { studentId: string; 
     <div>
       <button
         onClick={onBack}
-        className="flex items-center gap-2 text-sm text-white/50 hover:text-white mb-4 transition-colors"
+        className="flex items-center gap-2 text-sm text-gray-400 hover:text-gray-900 mb-4 transition-colors"
       >
         <ArrowLeft size={16} /> Voltar para alunos
       </button>
@@ -801,8 +801,8 @@ function StudentProfile({ studentId, onBack, onNavigate }: { studentId: string; 
             {student.first_name.charAt(0)}{student.last_name.charAt(0)}
           </div>
           <div className="flex-1">
-            <h1 className="text-xl font-display font-bold text-white">{fullName}</h1>
-            <p className="text-sm text-white/40 mt-0.5">{student.code} · {student.course?.name || 'Sem curso'}</p>
+            <h1 className="text-xl font-display font-bold text-gray-900">{fullName}</h1>
+            <p className="text-sm text-gray-400 mt-0.5">{student.code} · {student.course?.name || 'Sem curso'}</p>
             <div className="flex items-center gap-2 mt-2">
               <StatusBadge status={student.status} />
               <StatusBadge status={student.academic_status} />

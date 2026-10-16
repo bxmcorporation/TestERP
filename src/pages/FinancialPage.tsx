@@ -169,10 +169,10 @@ export function FinancialPage() {
       label: 'Descrição',
       render: (i) => (
         <div>
-          <span className="text-white/90 font-medium">{i.description}</span>
-          <p className="text-xs text-white/30 font-mono mt-0.5">{i.code}</p>
+          <span className="text-gray-800 font-medium">{i.description}</span>
+          <p className="text-xs text-gray-300 font-mono mt-0.5">{i.code}</p>
           {i.student && (
-            <p className="text-xs text-white/40 mt-0.5">
+            <p className="text-xs text-gray-400 mt-0.5">
               {i.student.first_name} {i.student.last_name}
             </p>
           )}
@@ -196,14 +196,14 @@ export function FinancialPage() {
     {
       key: 'category',
       label: 'Categoria',
-      render: (i) => <span className="text-white/50 text-xs">{i.category || '—'}</span>,
+      render: (i) => <span className="text-gray-400 text-xs">{i.category || '—'}</span>,
     },
     {
       key: 'amount',
       label: 'Valor',
       render: (i) => (
         <span
-          className={`font-medium ${i.type === 'receita' ? 'text-green-400' : 'text-red-400'}`}
+          className={`font-medium ${i.type === 'receita' ? 'text-green-600' : 'text-red-600'}`}
         >
           {i.type === 'receita' ? '+' : '-'} {formatBRL(Number(i.amount))}
         </span>
@@ -214,9 +214,9 @@ export function FinancialPage() {
       label: 'Vencimento',
       render: (i) =>
         i.due_date ? (
-          <span className="text-white/50 text-xs">{new Date(i.due_date).toLocaleDateString('pt-BR')}</span>
+          <span className="text-gray-400 text-xs">{new Date(i.due_date).toLocaleDateString('pt-BR')}</span>
         ) : (
-          <span className="text-white/30">—</span>
+          <span className="text-gray-300">—</span>
         ),
     },
     {
@@ -243,7 +243,7 @@ export function FinancialPage() {
             {i.status === 'em_aberto' && (
               <button
                 onClick={() => markAsPaid(i)}
-                className="p-1.5 rounded-md text-green-400/60 hover:text-green-400 hover:bg-green-500/10 transition-all"
+                className="p-1.5 rounded-md text-green-600/60 hover:text-green-600 hover:bg-green-500/10 transition-all"
                 title="Marcar como pago"
               >
                 <CheckCircle size={16} />
@@ -266,14 +266,14 @@ export function FinancialPage() {
                 setEditingItem(i);
                 setModalOpen(true);
               }}
-              className="p-1.5 rounded-md text-white/40 hover:text-white hover:bg-white/[0.06] transition-all"
+              className="p-1.5 rounded-md text-gray-400 hover:text-gray-900 hover:bg-gray-100 transition-all"
               title="Editar"
             >
               <Pencil size={16} />
             </button>
             <button
               onClick={() => handleDelete(i)}
-              className="p-1.5 rounded-md text-white/40 hover:text-red-400 hover:bg-red-500/10 transition-all"
+              className="p-1.5 rounded-md text-gray-400 hover:text-red-600 hover:bg-red-500/10 transition-all"
               title="Excluir"
             >
               <Trash2 size={16} />
@@ -325,35 +325,35 @@ export function FinancialPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <Card className="border-green-500/10">
           <div className="flex items-center justify-between mb-2">
-            <div className="p-2 rounded-lg bg-green-500/10 border border-green-500/20 text-green-400">
+            <div className="p-2 rounded-lg bg-green-500/10 border border-green-500/20 text-green-600">
               <TrendingUp size={18} />
             </div>
-            <span className="text-xs text-white/40">Receita</span>
+            <span className="text-xs text-gray-400">Receita</span>
           </div>
-          <p className="text-2xl font-display font-bold text-white">{formatBRL(stats.totalReceita)}</p>
-          <p className="text-xs text-white/30 mt-1">Total recebido</p>
+          <p className="text-2xl font-display font-bold text-gray-900">{formatBRL(stats.totalReceita)}</p>
+          <p className="text-xs text-gray-300 mt-1">Total recebido</p>
         </Card>
 
         <Card className="border-red-500/10">
           <div className="flex items-center justify-between mb-2">
-            <div className="p-2 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400">
+            <div className="p-2 rounded-lg bg-red-500/10 border border-red-500/20 text-red-600">
               <TrendingDown size={18} />
             </div>
-            <span className="text-xs text-white/40">Despesa</span>
+            <span className="text-xs text-gray-400">Despesa</span>
           </div>
-          <p className="text-2xl font-display font-bold text-white">{formatBRL(stats.totalDespesa)}</p>
-          <p className="text-xs text-white/30 mt-1">Total pago</p>
+          <p className="text-2xl font-display font-bold text-gray-900">{formatBRL(stats.totalDespesa)}</p>
+          <p className="text-xs text-gray-300 mt-1">Total pago</p>
         </Card>
 
         <Card className="border-yellow-500/10">
           <div className="flex items-center justify-between mb-2">
-            <div className="p-2 rounded-lg bg-yellow-500/10 border border-yellow-500/20 text-yellow-400">
+            <div className="p-2 rounded-lg bg-yellow-500/10 border border-yellow-500/20 text-yellow-600">
               <Clock size={18} />
             </div>
-            <span className="text-xs text-white/40">Em aberto</span>
+            <span className="text-xs text-gray-400">Em aberto</span>
           </div>
-          <p className="text-2xl font-display font-bold text-white">{formatBRL(stats.emAberto)}</p>
-          <p className="text-xs text-white/30 mt-1">A receber</p>
+          <p className="text-2xl font-display font-bold text-gray-900">{formatBRL(stats.emAberto)}</p>
+          <p className="text-xs text-gray-300 mt-1">A receber</p>
         </Card>
 
         <Card className="border-orange-500/10">
@@ -361,10 +361,10 @@ export function FinancialPage() {
             <div className="p-2 rounded-lg bg-rayon-orange/10 border border-rayon-orange/20 text-rayon-orange">
               <AlertTriangle size={18} />
             </div>
-            <span className="text-xs text-white/40">Vencido</span>
+            <span className="text-xs text-gray-400">Vencido</span>
           </div>
-          <p className="text-2xl font-display font-bold text-white">{formatBRL(stats.vencido)}</p>
-          <p className="text-xs text-white/30 mt-1">Em atraso</p>
+          <p className="text-2xl font-display font-bold text-gray-900">{formatBRL(stats.vencido)}</p>
+          <p className="text-xs text-gray-300 mt-1">Em atraso</p>
         </Card>
       </div>
 
@@ -376,8 +376,8 @@ export function FinancialPage() {
               <DollarSign size={20} />
             </div>
             <div>
-              <p className="text-xs text-white/40">Saldo demonstrativo</p>
-              <p className="text-xl font-display font-bold text-white">
+              <p className="text-xs text-gray-400">Saldo demonstrativo</p>
+              <p className="text-xl font-display font-bold text-gray-900">
                 {formatBRL(stats.totalReceita - stats.totalDespesa)}
               </p>
             </div>
@@ -392,7 +392,7 @@ export function FinancialPage() {
       <Card className="mb-4">
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1">
-            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" />
+            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-300" />
             <input
               type="text"
               value={search}

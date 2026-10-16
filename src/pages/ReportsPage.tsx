@@ -125,7 +125,7 @@ export function ReportsPage({ onNavigate }: { onNavigate?: (path: string) => voi
       title: 'Relatório de Matrículas',
       description: 'Matrículas por curso e status',
       icon: GraduationCap,
-      color: 'text-blue-400',
+      color: 'text-blue-600',
       bg: 'bg-blue-500/10 border-blue-500/20',
       path: '/enrollments',
     },
@@ -133,7 +133,7 @@ export function ReportsPage({ onNavigate }: { onNavigate?: (path: string) => voi
       title: 'Relatório de Turmas',
       description: 'Turmas, ocupação e desempenho',
       icon: School,
-      color: 'text-green-400',
+      color: 'text-green-600',
       bg: 'bg-green-500/10 border-green-500/20',
       path: '/courses',
     },
@@ -141,7 +141,7 @@ export function ReportsPage({ onNavigate }: { onNavigate?: (path: string) => voi
       title: 'Relatório Financeiro',
       description: 'Receitas, despesas e inadimplência',
       icon: Wallet,
-      color: 'text-yellow-400',
+      color: 'text-yellow-600',
       bg: 'bg-yellow-500/10 border-yellow-500/20',
       path: '/financial',
     },
@@ -204,36 +204,36 @@ export function ReportsPage({ onNavigate }: { onNavigate?: (path: string) => voi
           <div className="inline-flex p-2.5 rounded-xl bg-rayon-orange/10 border border-rayon-orange/20 text-rayon-orange mb-3">
             <Users size={20} />
           </div>
-          <p className="text-3xl font-display font-bold text-white">{stats.totalStudents}</p>
-          <p className="text-xs text-white/40 mt-1">Alunos cadastrados</p>
-          <p className="text-xs text-green-400 mt-1">{stats.activeStudents} ativos</p>
+          <p className="text-3xl font-display font-bold text-gray-900">{stats.totalStudents}</p>
+          <p className="text-xs text-gray-400 mt-1">Alunos cadastrados</p>
+          <p className="text-xs text-green-600 mt-1">{stats.activeStudents} ativos</p>
         </Card>
 
         <Card className="text-center">
-          <div className="inline-flex p-2.5 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 mb-3">
+          <div className="inline-flex p-2.5 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-600 mb-3">
             <GraduationCap size={20} />
           </div>
-          <p className="text-3xl font-display font-bold text-white">{stats.totalTeachers}</p>
-          <p className="text-xs text-white/40 mt-1">Professores</p>
-          <p className="text-xs text-white/30 mt-1">{stats.totalCourses} cursos</p>
+          <p className="text-3xl font-display font-bold text-gray-900">{stats.totalTeachers}</p>
+          <p className="text-xs text-gray-400 mt-1">Professores</p>
+          <p className="text-xs text-gray-300 mt-1">{stats.totalCourses} cursos</p>
         </Card>
 
         <Card className="text-center">
-          <div className="inline-flex p-2.5 rounded-xl bg-green-500/10 border border-green-500/20 text-green-400 mb-3">
+          <div className="inline-flex p-2.5 rounded-xl bg-green-500/10 border border-green-500/20 text-green-600 mb-3">
             <School size={20} />
           </div>
-          <p className="text-3xl font-display font-bold text-white">{stats.totalClasses}</p>
-          <p className="text-xs text-white/40 mt-1">Turmas</p>
-          <p className="text-xs text-white/30 mt-1">{stats.totalUnits} unidades</p>
+          <p className="text-3xl font-display font-bold text-gray-900">{stats.totalClasses}</p>
+          <p className="text-xs text-gray-400 mt-1">Turmas</p>
+          <p className="text-xs text-gray-300 mt-1">{stats.totalUnits} unidades</p>
         </Card>
 
         <Card className="text-center">
           <div className="inline-flex p-2.5 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400 mb-3">
             <ClipboardCheck size={20} />
           </div>
-          <p className="text-3xl font-display font-bold text-white">{attendanceRate}%</p>
-          <p className="text-xs text-white/40 mt-1">Taxa de frequência</p>
-          <p className="text-xs text-white/30 mt-1">{stats.totalLessons} aulas</p>
+          <p className="text-3xl font-display font-bold text-gray-900">{attendanceRate}%</p>
+          <p className="text-xs text-gray-400 mt-1">Taxa de frequência</p>
+          <p className="text-xs text-gray-300 mt-1">{stats.totalLessons} aulas</p>
         </Card>
       </div>
 
@@ -241,37 +241,37 @@ export function ReportsPage({ onNavigate }: { onNavigate?: (path: string) => voi
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
         <Card>
           <div className="flex items-center gap-2 mb-4">
-            <Wallet size={18} className="text-white/50" />
-            <h3 className="text-sm font-semibold text-white/80">Resumo Financeiro</h3>
+            <Wallet size={18} className="text-gray-400" />
+            <h3 className="text-sm font-semibold text-gray-700">Resumo Financeiro</h3>
           </div>
           <div className="space-y-3">
             <div className="flex items-center justify-between p-3 rounded-lg bg-green-500/5 border border-green-500/10">
               <div className="flex items-center gap-2.5">
-                <TrendingUp size={16} className="text-green-400" />
-                <span className="text-sm text-white/70">Receitas</span>
+                <TrendingUp size={16} className="text-green-600" />
+                <span className="text-sm text-gray-600">Receitas</span>
               </div>
-              <span className="text-sm font-medium text-green-400">{formatBRL(stats.totalReceita)}</span>
+              <span className="text-sm font-medium text-green-600">{formatBRL(stats.totalReceita)}</span>
             </div>
             <div className="flex items-center justify-between p-3 rounded-lg bg-red-500/5 border border-red-500/10">
               <div className="flex items-center gap-2.5">
-                <TrendingDown size={16} className="text-red-400" />
-                <span className="text-sm text-white/70">Despesas</span>
+                <TrendingDown size={16} className="text-red-600" />
+                <span className="text-sm text-gray-600">Despesas</span>
               </div>
-              <span className="text-sm font-medium text-red-400">{formatBRL(stats.totalDespesa)}</span>
+              <span className="text-sm font-medium text-red-600">{formatBRL(stats.totalDespesa)}</span>
             </div>
             <div className="flex items-center justify-between p-3 rounded-lg bg-yellow-500/5 border border-yellow-500/10">
               <div className="flex items-center gap-2.5">
-                <DollarSign size={16} className="text-yellow-400" />
-                <span className="text-sm text-white/70">Em aberto</span>
+                <DollarSign size={16} className="text-yellow-600" />
+                <span className="text-sm text-gray-600">Em aberto</span>
               </div>
-              <span className="text-sm font-medium text-yellow-400">{formatBRL(stats.emAberto)}</span>
+              <span className="text-sm font-medium text-yellow-600">{formatBRL(stats.emAberto)}</span>
             </div>
             <div className="flex items-center justify-between p-3 rounded-lg bg-rayon-orange/5 border border-rayon-orange/10">
               <div className="flex items-center gap-2.5">
                 <Activity size={16} className="text-rayon-orange" />
-                <span className="text-sm text-white/70">Saldo</span>
+                <span className="text-sm text-gray-600">Saldo</span>
               </div>
-              <span className={`text-sm font-medium ${stats.totalReceita - stats.totalDespesa >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+              <span className={`text-sm font-medium ${stats.totalReceita - stats.totalDespesa >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                 {formatBRL(stats.totalReceita - stats.totalDespesa)}
               </span>
             </div>
@@ -280,8 +280,8 @@ export function ReportsPage({ onNavigate }: { onNavigate?: (path: string) => voi
 
         <Card>
           <div className="flex items-center gap-2 mb-4">
-            <BarChart3 size={18} className="text-white/50" />
-            <h3 className="text-sm font-semibold text-white/80">Situação das Turmas</h3>
+            <BarChart3 size={18} className="text-gray-400" />
+            <h3 className="text-sm font-semibold text-gray-700">Situação das Turmas</h3>
           </div>
           {Object.keys(stats.classesByStatus).length === 0 ? (
             <EmptyState icon={<School size={24} />} title="Sem dados" description="Nenhuma turma cadastrada" />
@@ -293,10 +293,10 @@ export function ReportsPage({ onNavigate }: { onNavigate?: (path: string) => voi
                 return (
                   <div key={status}>
                     <div className="flex items-center justify-between text-xs mb-1">
-                      <span className="text-white/60">{label}</span>
-                      <span className="text-white/40">{count}</span>
+                      <span className="text-gray-500">{label}</span>
+                      <span className="text-gray-400">{count}</span>
                     </div>
-                    <div className="h-2 rounded-full bg-white/[0.06] overflow-hidden">
+                    <div className="h-2 rounded-full bg-gray-100 overflow-hidden">
                       <div
                         className="h-full rounded-full bg-rayon-orange transition-all"
                         style={{ width: `${pct}%` }}
@@ -313,8 +313,8 @@ export function ReportsPage({ onNavigate }: { onNavigate?: (path: string) => voi
       {/* Enrollments by status */}
       <Card className="mb-6">
         <div className="flex items-center gap-2 mb-4">
-          <GraduationCap size={18} className="text-white/50" />
-          <h3 className="text-sm font-semibold text-white/80">Matrículas por Situação</h3>
+          <GraduationCap size={18} className="text-gray-400" />
+          <h3 className="text-sm font-semibold text-gray-700">Matrículas por Situação</h3>
         </div>
         {Object.keys(stats.enrollmentsByStatus).length === 0 ? (
           <EmptyState icon={<GraduationCap size={24} />} title="Sem dados" description="Nenhuma matrícula" />
@@ -323,9 +323,9 @@ export function ReportsPage({ onNavigate }: { onNavigate?: (path: string) => voi
             {Object.entries(stats.enrollmentsByStatus).map(([status, count]) => {
               const label = status.charAt(0).toUpperCase() + status.slice(1).replace(/_/g, ' ');
               return (
-                <div key={status} className="p-3 rounded-lg bg-white/[0.02] border border-edge/subtle text-center">
-                  <p className="text-2xl font-display font-bold text-white">{count}</p>
-                  <p className="text-xs text-white/40 mt-1">{label}</p>
+                <div key={status} className="p-3 rounded-lg bg-gray-50 border border-edge/subtle text-center">
+                  <p className="text-2xl font-display font-bold text-gray-900">{count}</p>
+                  <p className="text-xs text-gray-400 mt-1">{label}</p>
                 </div>
               );
             })}
@@ -335,7 +335,7 @@ export function ReportsPage({ onNavigate }: { onNavigate?: (path: string) => voi
 
       {/* Report type cards */}
       <div>
-        <h2 className="text-sm font-semibold text-white/80 uppercase tracking-wide mb-3">
+        <h2 className="text-sm font-semibold text-gray-700 uppercase tracking-wide mb-3">
           Relatórios Detalhados
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -352,14 +352,14 @@ export function ReportsPage({ onNavigate }: { onNavigate?: (path: string) => voi
                     <Icon size={20} />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-sm font-semibold text-white/90 group-hover:text-white transition-colors">
+                    <h3 className="text-sm font-semibold text-gray-800 group-hover:text-gray-900 transition-colors">
                       {rc.title}
                     </h3>
-                    <p className="text-xs text-white/40 mt-1">{rc.description}</p>
+                    <p className="text-xs text-gray-400 mt-1">{rc.description}</p>
                   </div>
                   <ArrowRight
                     size={16}
-                    className="text-white/20 group-hover:text-white/60 group-hover:translate-x-0.5 transition-all"
+                    className="text-gray-300 group-hover:text-gray-500 group-hover:translate-x-0.5 transition-all"
                   />
                 </div>
               </Card>

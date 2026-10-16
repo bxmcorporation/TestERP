@@ -19,8 +19,8 @@ export function PageHeader({
   return (
     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
       <div>
-        <h1 className="text-2xl font-display font-bold text-white text-balance">{title}</h1>
-        {description && <p className="text-sm text-white/40 mt-1">{description}</p>}
+        <h1 className="text-2xl font-display font-bold text-gray-900 text-balance">{title}</h1>
+        {description && <p className="text-sm text-gray-400 mt-1">{description}</p>}
       </div>
       {actions && actions.length > 0 && (
         <div className="flex items-center gap-2 flex-wrap">
@@ -43,8 +43,8 @@ export function PageHeader({
 export function SectionTitle({ title, description }: { title: string; description?: string }) {
   return (
     <div className="mb-4">
-      <h2 className="text-sm font-semibold text-white/80 uppercase tracking-wide">{title}</h2>
-      {description && <p className="text-xs text-white/40 mt-0.5">{description}</p>}
+      <h2 className="text-sm font-semibold text-gray-700 uppercase tracking-wide">{title}</h2>
+      {description && <p className="text-xs text-gray-400 mt-0.5">{description}</p>}
     </div>
   );
 }
@@ -62,12 +62,12 @@ export function FormField({
 }) {
   return (
     <div>
-      <label className="block text-xs font-medium text-white/50 mb-1.5">
+      <label className="block text-xs font-medium text-gray-400 mb-1.5">
         {label}
         {required && <span className="text-rayon-orange ml-0.5">*</span>}
       </label>
       {children}
-      {hint && <p className="text-xs text-white/30 mt-1">{hint}</p>}
+      {hint && <p className="text-xs text-gray-300 mt-1">{hint}</p>}
     </div>
   );
 }

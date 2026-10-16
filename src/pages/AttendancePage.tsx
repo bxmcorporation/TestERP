@@ -237,8 +237,8 @@ export function AttendancePage() {
                 <Card className="mb-4">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <div>
-                      <h3 className="text-sm font-semibold text-white/90">{selectedLesson.title}</h3>
-                      <p className="text-xs text-white/40 mt-0.5">
+                      <h3 className="text-sm font-semibold text-gray-800">{selectedLesson.title}</h3>
+                      <p className="text-xs text-gray-400 mt-0.5">
                         {selectedLesson.class?.name} · {teacherName} ·{' '}
                         {new Date(selectedLesson.lesson_date).toLocaleDateString('pt-BR')} ·{' '}
                         {selectedLesson.start_time}—{selectedLesson.end_time}
@@ -253,20 +253,20 @@ export function AttendancePage() {
               {records.length > 0 && (
                 <div className="grid grid-cols-4 gap-3 mb-4">
                   <Card className="text-center !p-3">
-                    <p className="text-xl font-display font-bold text-green-400">{statusStats.presente}</p>
-                    <p className="text-xs text-white/40 mt-0.5">Presentes</p>
+                    <p className="text-xl font-display font-bold text-green-600">{statusStats.presente}</p>
+                    <p className="text-xs text-gray-400 mt-0.5">Presentes</p>
                   </Card>
                   <Card className="text-center !p-3">
-                    <p className="text-xl font-display font-bold text-red-400">{statusStats.ausente}</p>
-                    <p className="text-xs text-white/40 mt-0.5">Ausentes</p>
+                    <p className="text-xl font-display font-bold text-red-600">{statusStats.ausente}</p>
+                    <p className="text-xs text-gray-400 mt-0.5">Ausentes</p>
                   </Card>
                   <Card className="text-center !p-3">
-                    <p className="text-xl font-display font-bold text-yellow-400">{statusStats.justificado}</p>
-                    <p className="text-xs text-white/40 mt-0.5">Justificados</p>
+                    <p className="text-xl font-display font-bold text-yellow-600">{statusStats.justificado}</p>
+                    <p className="text-xs text-gray-400 mt-0.5">Justificados</p>
                   </Card>
                   <Card className="text-center !p-3">
-                    <p className="text-xl font-display font-bold text-white/40">{statusStats.pendente}</p>
-                    <p className="text-xs text-white/40 mt-0.5">Pendentes</p>
+                    <p className="text-xl font-display font-bold text-gray-400">{statusStats.pendente}</p>
+                    <p className="text-xs text-gray-400 mt-0.5">Pendentes</p>
                   </Card>
                 </div>
               )}
@@ -286,7 +286,7 @@ export function AttendancePage() {
                     {records.map((r) => (
                       <div
                         key={r.student.id}
-                        className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 rounded-lg bg-white/[0.02] border border-edge/subtle"
+                        className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 rounded-lg bg-gray-50 border border-edge/subtle"
                       >
                         <div className="flex items-center gap-3">
                           <div className="w-8 h-8 rounded-full bg-rayon-orange/10 border border-rayon-orange/20 flex items-center justify-center text-xs font-medium text-rayon-orange shrink-0">
@@ -294,10 +294,10 @@ export function AttendancePage() {
                             {r.student.last_name.charAt(0)}
                           </div>
                           <div>
-                            <p className="text-sm text-white/90 font-medium">
+                            <p className="text-sm text-gray-800 font-medium">
                               {r.student.first_name} {r.student.last_name}
                             </p>
-                            <p className="text-xs text-white/30 font-mono">{r.student.code}</p>
+                            <p className="text-xs text-gray-300 font-mono">{r.student.code}</p>
                           </div>
                         </div>
 
@@ -307,17 +307,17 @@ export function AttendancePage() {
                             const isActive = r.status === s.value;
                             const colorClasses: Record<string, string> = {
                               green: isActive
-                                ? 'bg-green-500/15 text-green-400 border-green-500/30'
-                                : 'text-white/40 border-edge hover:text-green-400 hover:border-green-500/20',
+                                ? 'bg-green-500/15 text-green-600 border-green-500/30'
+                                : 'text-gray-400 border-edge hover:text-green-600 hover:border-green-500/20',
                               red: isActive
-                                ? 'bg-red-500/15 text-red-400 border-red-500/30'
-                                : 'text-white/40 border-edge hover:text-red-400 hover:border-red-500/20',
+                                ? 'bg-red-500/15 text-red-600 border-red-500/30'
+                                : 'text-gray-400 border-edge hover:text-red-600 hover:border-red-500/20',
                               yellow: isActive
-                                ? 'bg-yellow-500/15 text-yellow-400 border-yellow-500/30'
-                                : 'text-white/40 border-edge hover:text-yellow-400 hover:border-yellow-500/20',
+                                ? 'bg-yellow-500/15 text-yellow-600 border-yellow-500/30'
+                                : 'text-gray-400 border-edge hover:text-yellow-600 hover:border-yellow-500/20',
                               gray: isActive
-                                ? 'bg-white/[0.08] text-white/60 border-white/[0.12]'
-                                : 'text-white/40 border-edge hover:text-white/70',
+                                ? 'bg-gray-200 text-gray-500 border-black/[0.12]'
+                                : 'text-gray-400 border-edge hover:text-gray-600',
                             };
                             return (
                               <button
@@ -337,11 +337,11 @@ export function AttendancePage() {
                     {/* Save bar */}
                     <div className="flex items-center justify-between pt-4 mt-2 border-t border-edge">
                       {savedMessage ? (
-                        <span className="text-sm text-green-400 flex items-center gap-2">
+                        <span className="text-sm text-green-600 flex items-center gap-2">
                           <Check size={16} /> Frequência salva com sucesso!
                         </span>
                       ) : (
-                        <span className="text-xs text-white/40">
+                        <span className="text-xs text-gray-400">
                           {records.length} aluno(s) · {statusStats.pendente} pendente(s)
                         </span>
                       )}
@@ -364,8 +364,8 @@ export function AttendancePage() {
           {!selectedLessonId && (
             <Card>
               <div className="flex items-center gap-2 mb-4">
-                <History size={18} className="text-white/50" />
-                <h3 className="text-sm font-semibold text-white/80">Aulas Recentes</h3>
+                <History size={18} className="text-gray-400" />
+                <h3 className="text-sm font-semibold text-gray-700">Aulas Recentes</h3>
               </div>
               {history.length === 0 ? (
                 <EmptyState
@@ -383,22 +383,22 @@ export function AttendancePage() {
                     return (
                       <div
                         key={lesson.id}
-                        className="flex items-center justify-between p-3 rounded-lg bg-white/[0.02] border border-edge/subtle cursor-pointer hover:bg-white/[0.04] transition-colors"
+                        className="flex items-center justify-between p-3 rounded-lg bg-gray-50 border border-edge/subtle cursor-pointer hover:bg-gray-100 transition-colors"
                         onClick={() => setSelectedLessonId(lesson.id)}
                       >
                         <div>
-                          <p className="text-sm text-white/90 font-medium">{lesson.title}</p>
-                          <p className="text-xs text-white/40 mt-0.5">
+                          <p className="text-sm text-gray-800 font-medium">{lesson.title}</p>
+                          <p className="text-xs text-gray-400 mt-0.5">
                             {lesson.class?.name || '—'} · {new Date(lesson.lesson_date).toLocaleDateString('pt-BR')}
                           </p>
                         </div>
                         <div className="flex items-center gap-3">
                           {total > 0 ? (
-                            <span className="text-xs text-white/50">
+                            <span className="text-xs text-gray-400">
                               {present}/{total} ({rate}%)
                             </span>
                           ) : (
-                            <span className="text-xs text-white/30">Sem registros</span>
+                            <span className="text-xs text-gray-300">Sem registros</span>
                           )}
                           <StatusBadge status={lesson.status} />
                         </div>
